@@ -1,0 +1,230 @@
+{
+  "2025-06-24": [
+    {
+      "hora": "23:59",
+      "titulo": "Bienvenido NimexBot gracias por la agenda!",
+      "asistentes": [
+        {
+          "id": 7014104426,
+          "nombre": "Jesús",
+          "username": "NimexDev"
+        }
+      ]
+    }
+  ],
+  "2025-06-28": [
+    {
+      "hora": "19:00",
+      "titulo": "Tomar algo en grupo 🍷 Boutique",
+      "asistentes": [
+        {
+          "id": 7014104426,
+          "nombre": "Jesús",
+          "username": "NimexDev"
+        },
+        {
+          "id": 701410,
+          "nombre": "CRISTINA"
+        },
+        {
+          "id": 70146,
+          "nombre": "Skull",
+          "username": "Neogord"
+        },
+        {
+          "id": 7016,
+          "nombre": "José"
+        },
+        {
+          "id": 146,
+          "nombre": "Ana Nieves"
+        },
+        {
+          "id": 11426,
+          "nombre": "Vanesa"
+        }
+      ]
+    }
+  ],
+  "2025-07-11": [
+    {
+      "hora": "17:00",
+      "titulo": "Superman Cines Yelmo(Berceo)🍿",
+      "asistentes": [
+        {
+          "id": 7014104426,
+          "nombre": "Jesús",
+          "username": "NimexDev"
+        }
+      ]
+    }
+  ],
+  "2025-07-12": [
+    {
+      "hora": "19:00",
+      "titulo": "Feria Espolón 🎢",
+      "asistentes": [
+        {
+          "id": 435435435,
+          "nombre": "3 PERSONAS ASOCIADAS A CRISTINA, PREGUNTAR A ELLAbE"
+        },
+        {
+          "id": 810973649,
+          "nombre": "D",
+          "username": "DP199X"
+        }
+      ]
+    },
+    {
+      "hora": "21:15",
+      "titulo": "Cena en Sidney's",
+      "asistentes": [
+        {
+          "id": 435435435,
+          "nombre": "3 PERSONAS ASOCIADAS A CRISTINA, PREGUNTAR A ELLA"
+        },
+        {
+          "id": 810973649,
+          "nombre": "D",
+          "username": "DP199X"
+        }
+      ]
+    }
+  ],
+  "2025-07-09": [
+    {
+      "hora": "19:30",
+      "titulo": "Tomar algo y charlar en Bar 9(Terraza)",
+      "asistentes": [
+        {
+          "id": 435435435,
+          "nombre": "3 PERSONAS ASOCIADAS A CRISTINA, PREGUNTAR A ELLA"
+        },
+        {
+          "id": 810973649,
+          "nombre": "D",
+          "username": "DP199X"
+        }
+      ]
+    }
+  ],
+  "2025-07-05": [
+    {
+      "hora": "21:10",
+      "titulo": "XXXIX Jornada \"Pasos con Andrés Garzon\" (Quedamos en el mercado de la ahuela, marques de murrieta 42, Esquina con Industria)",
+      "asistentes": [
+        {
+          "id": 435435435,
+          "nombre": "ROSA"
+        },
+        {
+          "id": 435435435,
+          "nombre": "ROMA"
+        }
+      ]
+    },
+    {
+      "hora": "21:45",
+      "titulo": "Cena en La Trompeta",
+      "asistentes": [
+        {
+          "id": 435435435,
+          "nombre": "12 PERSONAS ASOCIADAS A CRISTINA, PREGUNTAR A ELLA"
+        }
+      ]
+    }
+  ],
+  "2025-07-04": [
+    {
+      "hora": "19:30",
+      "titulo": "Cervezas y tónicas, despues pintxos por la zona BierHouse, soportales 7 infantes",
+      "asistentes": [
+        {
+          "id": 435435435,
+          "nombre": "ROMA"
+        },
+        {
+          "id": 435435435,
+          "nombre": "MARI MAR"
+        },
+        {
+          "id": 7638544240,
+          "nombre": "Candiman",
+          "username": "Retinero"
+        }
+      ]
+    }
+  ],
+  "2025-07-25": [
+    {
+      "hora": "17:00",
+      "titulo": "Cines Yelmo: Los 4 Fantasticos",
+      "asistentes": []
+    }
+  ],
+  "2025-08-01": [
+    {
+      "hora": "20:00",
+      "titulo": "¡Bailando en Plata! - Plaza Gallarza (Logroño)",
+      "asistentes": []
+    }
+  ],
+  "2025-09-12": [
+    {
+      "hora": "21:00",
+      "titulo": "🍢 Pintxo Pote en Gonzalo de Berceo – Bar Once Metros 🌿 Especialidad: Espárragos ⚡ Se ruega puntualidad 😉",
+      "asistentes": [
+        {
+          "id": 2343242343234,
+          "nombre": "Lorraine",
+          "username": "PBYUO"
+        },
+        {
+          "id": 641470822,
+          "username": "dequeneme",
+          "nombre": "David"
+        }
+      ]
+    }
+  ],
+  "2025-09-13": [
+    {
+      "hora": "21:00",
+      "titulo": "Plan de cena en el Bar Sydney 🍽️ en la calle María Teresa Gil de Gárate 📍",
+      "asistentes": [
+        {
+          "id": 64147083242,
+          "username": "Cristina",
+          "nombre": "Cristina"
+        },
+        {
+          "id": 992760599,
+          "username": "a_c_go",
+          "nombre": "Antonio"
+        }
+      ]
+    }
+  ],
+  "2025-09-20": [
+    {
+      "hora": "20:00",
+      "titulo": "¡Qué pasa, majo! Nos vemos en la San Juan para unos pinchos 🍢. ¡No faltes, que ya sabes que luego nos echamos unas risas! Un abrazo, figura! 🍻",
+      "asistentes": [
+        {
+          "id": 64147083242,
+          "username": "Cristina",
+          "nombre": "Cristina"
+        }
+      ]
+    }
+  ],
+  "2025-09-18": [
+    {
+      "hora": "20:30",
+      "titulo": "Test",
+      "asistentes": [],
+      "creador_id": 7014104426,
+      "activo": false
+    }
+  ]
+}

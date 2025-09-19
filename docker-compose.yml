@@ -1,0 +1,19 @@
+# docker-compose.yml
+
+services:
+  bot:
+    # Construye la imagen usando el Dockerfile en el directorio actual
+    build: .
+    # Le damos un nombre fácil de recordar al contenedor
+    container_name: nimex-chatbot
+    # Le indicamos que cargue las variables de entorno desde nuestro archivo .env
+    # ¡Así mantenemos los secretos fuera del código!
+    env_file:
+      - .env
+    # Montamos la carpeta 'data' local dentro del contenedor.
+    # Esto hace que los archivos agenda.json y users.json sean persistentes.
+    # ¡Si el contenedor se reinicia, los datos no se pierden!
+    volumes:
+      - ./data:/app/data
+    # Reinicia el contenedor automáticamente si se cae, a menos que lo paremos nosotros.
+    restart: unless-stopped
