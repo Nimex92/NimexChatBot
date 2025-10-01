@@ -15,7 +15,7 @@ import google.generativeai as genai
 from datetime import datetime
 import traceback
 
-# Modelo de IA configurado con su personalidad y herramientas disponibles.
+# Instancia global del modelo de IA (Gemini), configurado con su personalidad y herramientas.
 model = genai.GenerativeModel(
     model_name="gemini-1.5-flash",
     tools=ALL_TOOLS,

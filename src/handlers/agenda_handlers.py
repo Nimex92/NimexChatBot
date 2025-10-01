@@ -264,29 +264,12 @@ async def manejar_mensajes_de_texto(update: Update, context: ContextTypes.DEFAUL
     (estado 'esperando_nombre_evento'). Si es así, utiliza el texto del
     mensaje como título del evento y finaliza el proceso de creación.
 
-    Si el usuario no está en ese estado, el mensaje se ignora.
+    Si el usuario no está en ese estado, se envía un mensaje de ayuda
+    para guiarle sobre cómo usar los comandos.
 
     Args:
         update (Update): El objeto de actualización de Telegram.
         context (ContextTypes.DEFAULT_TYPE): El contexto del bot.
-        agenda_manager.crear_evento(
-            fecha=datos_evento['fecha'],
-            hora=datos_evento['hora'],
-            titulo=titulo_evento,
-            creador_id=user_id
-        )
-        
-        await update.message.reply_text("✅ ¡Evento guardado con éxito!")
-        
-        # Limpiamos el estado y los datos temporales del usuario
-        context.user_data.pop('estado', None)
-        context.user_data.pop('nuevo_evento', None)
-    # else:
-        # Si no hay un estado activo, le recordamos al usuario cómo usar el bot
-        # await update.message.reply_text("No he entendido eso. 🤔\nPara ver, crear o modificar eventos, usa el comando /agenda.")
-    """
-    Revisa el estado del usuario. Si está creando un evento, procesa el texto.
-    Si no, lo envía al chat general con la IA.
     """
     user_id = update.effective_user.id
     estado = context.user_data.get('estado')
@@ -295,7 +278,6 @@ async def manejar_mensajes_de_texto(update: Update, context: ContextTypes.DEFAUL
         titulo_evento = update.message.text
         datos_evento = context.user_data.get('nuevo_evento', {})
         
-        # Llamamos al manager para que cree el evento
         agenda_manager.crear_evento(
             fecha=datos_evento['fecha'],
             hora=datos_evento['hora'],
@@ -305,5 +287,13 @@ async def manejar_mensajes_de_texto(update: Update, context: ContextTypes.DEFAUL
         
         await update.message.reply_text("✅ ¡Evento guardado con éxito!")
         
+        # Limpiar el estado para futuras interacciones
         context.user_data.pop('estado', None)
         context.user_data.pop('nuevo_evento', None)
+    else:
+        # Si no se está esperando una respuesta, se envía un mensaje de ayuda.
+        await update.message.reply_text(
+            "No he entendido eso. 🤔\n"
+            "Para interactuar con la agenda, usa el comando /agenda.\n"
+            "Para hablar con la IA, usa /ia."
+        )

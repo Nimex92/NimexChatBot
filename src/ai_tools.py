@@ -11,7 +11,7 @@ Este módulo cumple dos propósitos principales:
 from src.managers import agenda_manager
 from datetime import datetime
 
-# Esta es la descripción de las herramientas para que Gemini las entienda
+# Define la estructura de las herramientas que el modelo de IA puede usar.
 ALL_TOOLS = [
     {
         "name": "crear_evento",
@@ -61,7 +61,7 @@ ALL_TOOLS = [
     }
 ]
 
-# Este es el mapeo a nuestras funciones de Python reales
+# Mapea los nombres de las herramientas a las funciones reales de Python.
 AVAILABLE_TOOLS = {
     "crear_evento": agenda_manager.crear_evento,
     "obtener_eventos_activos": agenda_manager.obtener_eventos_activos,
