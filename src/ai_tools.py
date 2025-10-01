@@ -1,4 +1,13 @@
 # src/ai_tools.py
+"""Define las herramientas (funciones) que el modelo de IA puede utilizar.
+
+Este módulo cumple dos propósitos principales:
+1.  **ALL_TOOLS**: Define la estructura y descripción de las herramientas en un
+    formato que el modelo de IA (Gemini) puede entender. Esto incluye el nombre
+    de la función, su propósito y el esquema de sus parámetros.
+2.  **AVAILABLE_TOOLS**: Mapea los nombres de las herramientas definidas a las
+    funciones de Python reales que se encuentran en los módulos de `managers`.
+"""
 from src.managers import agenda_manager
 from datetime import datetime
 

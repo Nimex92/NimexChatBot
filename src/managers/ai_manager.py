@@ -1,12 +1,21 @@
 # src/managers/ai_manager.py
+"""Módulo de interacción con el modelo de Inteligencia Artificial.
+
+Este módulo se encarga de:
+1.  Configurar el modelo de IA (Gemini) con un `system_instruction` que define
+    su personalidad y comportamiento.
+2.  Proporcionar al modelo una lista de herramientas (funciones) que puede utilizar.
+3.  Orquestar el flujo de conversación, manejando las llamadas a funciones
+    que el modelo solicita y devolviéndole los resultados hasta obtener una
+    respuesta final en texto.
+"""
 from src.config import settings
 from src.ai_tools import ALL_TOOLS, AVAILABLE_TOOLS
 import google.generativeai as genai
 from datetime import datetime
 import traceback
 
-# Creamos el modelo de Gemini y le pasamos la descripción de las herramientas
-# Y AÑADIMOS DE NUEVO SU PERSONALIDAD COMPLETA
+# Modelo de IA configurado con su personalidad y herramientas disponibles.
 model = genai.GenerativeModel(
     model_name="gemini-1.5-flash",
     tools=ALL_TOOLS,
@@ -28,9 +37,23 @@ model = genai.GenerativeModel(
     )
 )
 
-async def process_user_prompt(prompt: str, user_id: int):
-    """
-    Procesa el texto del usuario con un bucle de llamada a funciones hasta obtener una respuesta final.
+async def process_user_prompt(prompt: str, user_id: int) -> str:
+    """Procesa el texto de un usuario utilizando el modelo de IA Gemini.
+
+    Esta función orquesta la interacción con el modelo de IA. Envía el prompt
+    del usuario y, si el modelo decide que necesita usar una de las herramientas
+    definidas (como `crear_evento`), esta función ejecuta la herramienta
+    correspondiente y devuelve el resultado al modelo. Este proceso puede
+    repetirse hasta que el modelo genere una respuesta de texto final para el
+    usuario.
+
+    Args:
+        prompt (str): El mensaje de texto enviado por el usuario.
+        user_id (int): El ID de Telegram del usuario que envía el mensaje.
+
+    Returns:
+        str: La respuesta de texto final generada por la IA, o un mensaje
+             de error si ocurre un problema durante el proceso.
     """
     if not settings.GEMINI_API_KEY:
         return "La integración con la IA no está configurada (falta la API Key de Gemini)."
@@ -41,7 +64,6 @@ async def process_user_prompt(prompt: str, user_id: int):
         
         response = await chat.send_message_async(contextual_prompt)
 
-        # Bucle de llamada a funciones
         while True:
             part = response.candidates[0].content.parts[0]
             
@@ -56,17 +78,21 @@ async def process_user_prompt(prompt: str, user_id: int):
                 function_to_call = AVAILABLE_TOOLS[function_name]
                 print(f"🤖 Ejecutando herramienta: {function_name}({function_args})")
                 
+                # La función real se ejecuta aquí
                 function_response_data = function_to_call(**function_args)
                 
+                # Enviamos el resultado de vuelta a la IA
                 response = await chat.send_message_async(
-                    {
-                        "function_response": {
-                            "name": function_name,
-                            "response": {
-                                "result": function_response_data,
+                    [
+                        {
+                            "function_response": {
+                                "name": function_name,
+                                "response": {
+                                    "result": str(function_response_data),
+                                }
                             }
                         }
-                    }
+                    ]
                 )
             else:
                 return "Lo siento, majo, la IA ha intentado usar una herramienta que no conozco."

@@ -1,4 +1,10 @@
 # src/config/settings.py
+"""Módulo de configuración centralizado.
+
+Carga variables de entorno, define constantes como rutas de archivos y configura
+clientes de servicios externos como la API de Gemini. La idea es tener
+un único lugar desde donde leer toda la configuración de la aplicación.
+"""
 import os
 from dotenv import load_dotenv
 import google.generativeai as genai # <-- AÑADIR
