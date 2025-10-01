@@ -1,61 +1,70 @@
 # src/handlers/agenda_handlers.py
-from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
+"""Manejadores de eventos relacionados con la agenda.
+
+Este módulo contiene toda la lógica para interactuar con el usuario a través
+de menús de botones (InlineKeyboards) y conversaciones de varios pasos para
+gestionar la agenda. Incluye funciones para:
+- Mostrar el menú principal de la agenda.
+- Visualizar los eventos programados.
+- Crear nuevos eventos paso a paso (fecha, hora, nombre).
+- Inscribirse, darse de baja y eliminar eventos.
+"""
+from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup, CallbackQuery
 from telegram.ext import ContextTypes
 from datetime import datetime, timedelta
 from babel.dates import format_datetime
 import locale
 
-# Para los nombres de los días/meses en español
+from src.managers import agenda_manager
+
 locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
 
-# Importamos el manager, que es el único que habla con la agenda
-from src.managers import agenda_manager
-# Importamos el handler del chat para derivar los mensajes que no son de la agenda
-from src.handlers import general_handlers
-
-# --- MANEJADOR PRINCIPAL DE CALLBACKS ---
-
 async def main_agenda_callback_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    """
-    Una única función que recibe todos los callbacks y los distribuye.
+    """Punto de entrada para todos los callbacks de la agenda.
+
+    Esta función actúa como un enrutador. Lee el `callback_data`, que sigue
+    el formato "accion|param1|param2|...", y llama a la función
+    correspondiente basándose en la `accion`.
+
+    Args:
+        update (Update): El objeto de actualización de Telegram.
+        context (ContextTypes.DEFAULT_TYPE): El contexto del bot.
     """
     query = update.callback_query
     await query.answer()
     
-    # Formato del callback: "accion|param1|param2|..."
     parts = query.data.split('|')
     action = parts[0]
 
-    # Menús principales
-    if action == 'ver_agenda':
-        await mostrar_agenda(query)
-    elif action == 'inscribir_menu':
-        await inscribirme_menu(query)
-    elif action == 'desinscribir_menu':
-        await darse_baja_menu(query)
-    elif action == 'eliminar_menu':
-        await eliminar_evento_menu(query)
+    # Enrutamiento de acciones
+    action_router = {
+        'ver_agenda': mostrar_agenda,
+        'inscribir_menu': inscribirme_menu,
+        'desinscribir_menu': darse_baja_menu,
+        'eliminar_menu': eliminar_evento_menu,
+        'crear_evento_fecha': pedir_fecha_creacion,
+        'fecha_seleccionada': lambda q, c: guardar_fecha_y_pedir_hora(q, c, fecha=parts[1]),
+        'hora_seleccionada': lambda q, c: guardar_hora_y_pedir_nombre(q, c, hora=parts[1]),
+        'inscribirse': lambda q, c: manejar_inscripcion(q, fecha=parts[1], idx=int(parts[2])),
+        'desinscribirse': lambda q, c: manejar_desinscripcion(q, fecha=parts[1], idx=int(parts[2])),
+        'eliminar': lambda q, c: manejar_eliminacion(q, fecha=parts[1], idx=int(parts[2])),
+    }
 
-    # Flujo de creación de eventos
-    elif action == 'crear_evento_fecha':
-        await pedir_fecha_creacion(query, context)
-    elif action == 'fecha_seleccionada':
-        await guardar_fecha_y_pedir_hora(query, context, fecha=parts[1])
-    elif action == 'hora_seleccionada':
-        await guardar_hora_y_pedir_nombre(query, context, hora=parts[1])
+    if action in action_router:
+        # Algunas funciones necesitan el contexto, otras no.
+        if action in ['crear_evento_fecha', 'fecha_seleccionada', 'hora_seleccionada']:
+            await action_router[action](query, context)
+        else:
+            await action_router[action](query)
 
-    # Acciones finales
-    elif action == 'inscribirse':
-        await manejar_inscripcion(query, fecha=parts[1], idx=int(parts[2]))
-    elif action == 'desinscribirse':
-        await manejar_desinscripcion(query, fecha=parts[1], idx=int(parts[2]))
-    elif action == 'eliminar':
-        await manejar_eliminacion(query, fecha=parts[1], idx=int(parts[2]))
-
-# --- Menú y Vistas ---
 
 async def agenda_menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    """Muestra el menú principal de la agenda."""
+    """Muestra el menú principal de la agenda con botones de acción.
+
+    Args:
+        update (Update): El objeto de actualización de Telegram.
+        context (ContextTypes.DEFAULT_TYPE): El contexto del bot.
+    """
     keyboard = [
         [InlineKeyboardButton("📅 Ver agenda", callback_data='ver_agenda')],
         [InlineKeyboardButton("✍️ Crear un evento", callback_data='crear_evento_fecha')],
@@ -65,18 +74,22 @@ async def agenda_menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
     ]
     await update.message.reply_text("¿Qué quieres hacer con la agenda?", reply_markup=InlineKeyboardMarkup(keyboard))
 
-async def mostrar_agenda(query: Update.callback_query):
-    """Muestra los eventos activos de las próximas 2 semanas."""
-    eventos_por_fecha = agenda_manager.obtener_eventos_activos(dias=14)
+async def mostrar_agenda(query: CallbackQuery):
+    """Formatea y muestra los eventos activos de las próximas 2 semanas.
+
+    Args:
+        query (CallbackQuery): El objeto de callback query de la interacción.
+    """
+    eventos_data = agenda_manager.obtener_eventos_activos()
     mensaje = "📅 *Agenda de Próximos Eventos*\n\n"
-    if not eventos_por_fecha:
+    if not eventos_data:
         mensaje += "_No hay nada programado._"
     else:
-        for fecha_str, eventos_con_idx in eventos_por_fecha.items():
-            fecha_dt = datetime.strptime(fecha_str, "%Y-%m-%d")
+        for item in eventos_data:
+            fecha_dt = datetime.strptime(item['fecha'], "%Y-%m-%d")
             nombre_dia = format_datetime(fecha_dt, "EEEE, d 'de' MMMM", locale="es").capitalize()
             mensaje += f"*{nombre_dia}*\n"
-            for _, evento in eventos_con_idx:
+            for _, evento in item['eventos']:
                 asistentes = ', '.join([a.get('nombre', 'Anónimo') for a in evento["asistentes"]])
                 mensaje += f"  🕑 `{evento['hora']}` - {evento['titulo']}\n"
                 if asistentes:
@@ -84,10 +97,13 @@ async def mostrar_agenda(query: Update.callback_query):
             mensaje += "\n"
     await query.edit_message_text(mensaje, parse_mode="Markdown")
 
-# --- Flujo de Creación de Eventos ---
+async def pedir_fecha_creacion(query: CallbackQuery, context: ContextTypes.DEFAULT_TYPE):
+    """Muestra un teclado con los próximos 14 días para crear un evento.
 
-async def pedir_fecha_creacion(query: Update.callback_query, context: ContextTypes.DEFAULT_TYPE):
-    """Muestra botones para seleccionar una fecha."""
+    Args:
+        query (CallbackQuery): El objeto de callback query.
+        context (ContextTypes.DEFAULT_TYPE): El contexto del bot.
+    """
     botones = []
     hoy = datetime.today()
     for i in range(14):
@@ -96,27 +112,36 @@ async def pedir_fecha_creacion(query: Update.callback_query, context: ContextTyp
         callback_data = f"fecha_seleccionada|{fecha.strftime('%Y-%m-%d')}"
         botones.append(InlineKeyboardButton(texto, callback_data=callback_data))
     
-    keyboard = [botones[i:i+3] for i in range(0, len(botones), 3)] # Filas de 3
+    keyboard = [botones[i:i+3] for i in range(0, len(botones), 3)]
     await query.edit_message_text("PASO 1: Elige la fecha del evento.", reply_markup=InlineKeyboardMarkup(keyboard))
 
-async def guardar_fecha_y_pedir_hora(query: Update.callback_query, context: ContextTypes.DEFAULT_TYPE, fecha: str):
-    """Guarda la fecha y muestra botones para la hora."""
-    context.user_data['nuevo_evento'] = {'fecha': fecha} # Guardamos en el contexto del usuario
-    
-    botones = []
-    for h in range(8, 23): # Horas razonables
-        for m in (0, 30):
-            hora_str = f"{h:02d}:{m:02d}"
-            callback_data = f"hora_seleccionada|{hora_str}"
-            botones.append(InlineKeyboardButton(hora_str, callback_data=callback_data))
+async def guardar_fecha_y_pedir_hora(query: CallbackQuery, context: ContextTypes.DEFAULT_TYPE, fecha: str):
+    """Guarda la fecha seleccionada en `user_data` y pide la hora.
 
-    keyboard = [botones[i:i+4] for i in range(0, len(botones), 4)] # Filas de 4
+    Args:
+        query (CallbackQuery): El objeto de callback query.
+        context (ContextTypes.DEFAULT_TYPE): El contexto del bot.
+        fecha (str): La fecha seleccionada en formato 'YYYY-MM-DD'.
+    """
+    context.user_data['nuevo_evento'] = {'fecha': fecha}
+
+    botones = [
+        InlineKeyboardButton(f"{h:02d}:{m:02d}", callback_data=f"hora_seleccionada|{h:02d}:{m:02d}")
+        for h in range(8, 23) for m in (0, 30)
+    ]
+    keyboard = [botones[i:i+4] for i in range(0, len(botones), 4)]
     await query.edit_message_text("PASO 2: Ahora elige la hora.", reply_markup=InlineKeyboardMarkup(keyboard))
 
-async def guardar_hora_y_pedir_nombre(query: Update.callback_query, context: ContextTypes.DEFAULT_TYPE, hora: str):
-    """Guarda la hora, pide el nombre y actualiza el estado."""
+async def guardar_hora_y_pedir_nombre(query: CallbackQuery, context: ContextTypes.DEFAULT_TYPE, hora: str):
+    """Guarda la hora, pide el nombre del evento y cambia el estado del usuario.
+
+    Args:
+        query (CallbackQuery): El objeto de callback query.
+        context (ContextTypes.DEFAULT_TYPE): El contexto del bot.
+        hora (str): La hora seleccionada en formato 'HH:MM'.
+    """
     context.user_data['nuevo_evento']['hora'] = hora
-    context.user_data['estado'] = 'esperando_nombre_evento' # ¡Importante!
+    context.user_data['estado'] = 'esperando_nombre_evento'
     
     fecha_dt = datetime.strptime(context.user_data['nuevo_evento']['fecha'], "%Y-%m-%d")
     fecha_texto = format_datetime(fecha_dt, "EEEE d", locale="es")
@@ -125,17 +150,19 @@ async def guardar_hora_y_pedir_nombre(query: Update.callback_query, context: Con
                                   "PASO 3: Ahora, dime en un mensaje el nombre o título del evento.",
                                   parse_mode="Markdown")
 
-# --- Flujos de Inscripción, Baja y Eliminación ---
+async def inscribirme_menu(query: CallbackQuery):
+    """Muestra un menú con los eventos disponibles para inscribirse.
 
-async def inscribirme_menu(query: Update.callback_query):
-    """Muestra los eventos a los que un usuario se puede inscribir."""
-    eventos_por_fecha = agenda_manager.obtener_eventos_activos()
+    Args:
+        query (CallbackQuery): El objeto de callback query.
+    """
+    eventos_data = agenda_manager.obtener_eventos_activos()
     keyboard = []
-    for fecha_str, eventos_con_idx in eventos_por_fecha.items():
-        for idx, evento in eventos_con_idx:
-            fecha_corta = datetime.strptime(fecha_str, '%Y-%m-%d').strftime('%d/%m')
+    for item in eventos_data:
+        for idx, evento in item['eventos']:
+            fecha_corta = datetime.strptime(item['fecha'], '%Y-%m-%d').strftime('%d/%m')
             texto = f"({fecha_corta}) {evento['hora']} - {evento['titulo']}"
-            callback_data = f"inscribirse|{fecha_str}|{idx}"
+            callback_data = f"inscribirse|{item['fecha']}|{idx}"
             keyboard.append([InlineKeyboardButton(texto, callback_data=callback_data)])
     
     if not keyboard:
@@ -143,8 +170,12 @@ async def inscribirme_menu(query: Update.callback_query):
         return
     await query.edit_message_text("Elige un evento para apuntarte:", reply_markup=InlineKeyboardMarkup(keyboard))
 
-async def darse_baja_menu(query: Update.callback_query):
-    """Muestra al usuario los eventos en los que está inscrito para darse de baja."""
+async def darse_baja_menu(query: CallbackQuery):
+    """Muestra al usuario los eventos en los que está inscrito para darse de baja.
+
+    Args:
+        query (CallbackQuery): El objeto de callback query.
+    """
     user_id = query.from_user.id
     eventos_inscrito = agenda_manager.obtener_eventos_inscrito(user_id)
     keyboard = []
@@ -160,8 +191,12 @@ async def darse_baja_menu(query: Update.callback_query):
         return
     await query.edit_message_text("Elige de qué evento quieres borrarte:", reply_markup=InlineKeyboardMarkup(keyboard))
 
-async def eliminar_evento_menu(query: Update.callback_query):
-    """Muestra al creador los eventos que puede eliminar."""
+async def eliminar_evento_menu(query: CallbackQuery):
+    """Muestra al creador los eventos que puede eliminar.
+
+    Args:
+        query (CallbackQuery): El objeto de callback query.
+    """
     user_id = query.from_user.id
     eventos_creados = agenda_manager.obtener_eventos_creados_por(user_id)
     keyboard = []
@@ -177,9 +212,14 @@ async def eliminar_evento_menu(query: Update.callback_query):
         return
     await query.edit_message_text("Elige qué evento quieres eliminar (se marcará como inactivo):", reply_markup=InlineKeyboardMarkup(keyboard))
 
-# --- Lógica de Acciones ---
+async def manejar_inscripcion(query: CallbackQuery, fecha: str, idx: int):
+    """Procesa la inscripción de un usuario a un evento.
 
-async def manejar_inscripcion(query: Update.callback_query, fecha: str, idx: int):
+    Args:
+        query (CallbackQuery): El objeto de callback query.
+        fecha (str): La fecha del evento.
+        idx (int): El índice del evento.
+    """
     user = query.from_user
     user_info = {"id": user.id, "nombre": user.first_name, "username": user.username}
     
@@ -188,30 +228,48 @@ async def manejar_inscripcion(query: Update.callback_query, fecha: str, idx: int
     else:
         await query.edit_message_text("⚠️ Ya estabas inscrito en este evento.")
 
-async def manejar_desinscripcion(query: Update.callback_query, fecha: str, idx: int):
+async def manejar_desinscripcion(query: CallbackQuery, fecha: str, idx: int):
+    """Procesa la baja de un usuario de un evento.
+
+    Args:
+        query (CallbackQuery): El objeto de callback query.
+        fecha (str): La fecha del evento.
+        idx (int): El índice del evento.
+    """
     user_id = query.from_user.id
     if agenda_manager.desinscribir_usuario(fecha, idx, user_id):
         await query.edit_message_text("👍 Te has borrado del evento.")
     else:
         await query.edit_message_text("🤔 Parece que no estabas en la lista.")
 
-async def manejar_eliminacion(query: Update.callback_query, fecha: str, idx: int):
+async def manejar_eliminacion(query: CallbackQuery, fecha: str, idx: int):
+    """Procesa la eliminación (desactivación) de un evento.
+
+    Args:
+        query (CallbackQuery): El objeto de callback query.
+        fecha (str): La fecha del evento.
+        idx (int): El índice del evento.
+    """
     evento = agenda_manager.desactivar_evento(fecha, idx)
     if evento:
         await query.edit_message_text(f"🗑️ El evento '{evento['titulo']}' ha sido eliminado (desactivado).")
     else:
         await query.edit_message_text("❌ No se pudo encontrar el evento para eliminar.")
 
-# --- Manejador de Mensajes de Texto ---
-
-# ... (todo el código anterior de agenda_handlers.py se mantiene igual) ...
-
-# --- Manejador de Mensajes de Texto ---
 
 async def manejar_mensajes_de_texto(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    """
-    Revisa el estado del usuario. Si está creando un evento, procesa el texto.
-    Si no, le indica al usuario cómo interactuar.
+    """Maneja los mensajes de texto que no son comandos.
+
+    Comprueba si el usuario está en medio de la creación de un evento
+    (estado 'esperando_nombre_evento'). Si es así, utiliza el texto del
+    mensaje como título del evento y finaliza el proceso de creación.
+
+    Si el usuario no está en ese estado, se envía un mensaje de ayuda
+    para guiarle sobre cómo usar los comandos.
+
+    Args:
+        update (Update): El objeto de actualización de Telegram.
+        context (ContextTypes.DEFAULT_TYPE): El contexto del bot.
     """
     user_id = update.effective_user.id
     estado = context.user_data.get('estado')
@@ -220,7 +278,6 @@ async def manejar_mensajes_de_texto(update: Update, context: ContextTypes.DEFAUL
         titulo_evento = update.message.text
         datos_evento = context.user_data.get('nuevo_evento', {})
         
-        # Llamamos al manager para que cree el evento
         agenda_manager.crear_evento(
             fecha=datos_evento['fecha'],
             hora=datos_evento['hora'],
@@ -230,36 +287,13 @@ async def manejar_mensajes_de_texto(update: Update, context: ContextTypes.DEFAUL
         
         await update.message.reply_text("✅ ¡Evento guardado con éxito!")
         
-        # Limpiamos el estado y los datos temporales del usuario
+        # Limpiar el estado para futuras interacciones
         context.user_data.pop('estado', None)
         context.user_data.pop('nuevo_evento', None)
-    # else:
-        # Si no hay un estado activo, le recordamos al usuario cómo usar el bot
-        # await update.message.reply_text("No he entendido eso. 🤔\nPara ver, crear o modificar eventos, usa el comando /agenda.")
-    """
-    Revisa el estado del usuario. Si está creando un evento, procesa el texto.
-    Si no, lo envía al chat general con la IA.
-    """
-    user_id = update.effective_user.id
-    estado = context.user_data.get('estado')
-
-    if estado == 'esperando_nombre_evento':
-        titulo_evento = update.message.text
-        datos_evento = context.user_data.get('nuevo_evento', {})
-        
-        # Llamamos al manager para que cree el evento
-        agenda_manager.crear_evento(
-            fecha=datos_evento['fecha'],
-            hora=datos_evento['hora'],
-            titulo=titulo_evento,
-            creador_id=user_id
+    else:
+        # Si no se está esperando una respuesta, se envía un mensaje de ayuda.
+        await update.message.reply_text(
+            "No he entendido eso. 🤔\n"
+            "Para interactuar con la agenda, usa el comando /agenda.\n"
+            "Para hablar con la IA, usa /ia."
         )
-        
-        await update.message.reply_text("✅ ¡Evento guardado con éxito!")
-        
-        # Limpiamos el estado y los datos temporales del usuario
-        context.user_data.pop('estado', None)
-        context.user_data.pop('nuevo_evento', None)
-    # else:
-        # Si no hay un estado activo, es un mensaje normal para el chat
-        # await general_handlers.chat(update, context)
