@@ -3,6 +3,7 @@ from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ContextTypes
 from datetime import datetime, timedelta
 from babel.dates import format_datetime
+from telegram.helpers import escape_markdown
 import locale
 
 # Para los nombres de los días/meses en español
@@ -67,21 +68,33 @@ async def agenda_menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def mostrar_agenda(query: Update.callback_query):
     """Muestra los eventos activos de las próximas 2 semanas."""
-    eventos_por_fecha = agenda_manager.obtener_eventos_activos(dias=14)
+    eventos_por_fecha = agenda_manager.obtener_eventos_activos()
     mensaje = "📅 *Agenda de Próximos Eventos*\n\n"
+    
     if not eventos_por_fecha:
         mensaje += "_No hay nada programado._"
     else:
-        for fecha_str, eventos_con_idx in eventos_por_fecha.items():
+        for fecha_str, eventos in eventos_por_fecha.items():
             fecha_dt = datetime.strptime(fecha_str, "%Y-%m-%d")
             nombre_dia = format_datetime(fecha_dt, "EEEE, d 'de' MMMM", locale="es").capitalize()
             mensaje += f"*{nombre_dia}*\n"
-            for _, evento in eventos_con_idx:
-                asistentes = ', '.join([a.get('nombre', 'Anónimo') for a in evento["asistentes"]])
-                mensaje += f"  🕑 `{evento['hora']}` - {evento['titulo']}\n"
+            
+            for evento in eventos:
+                # --- AQUÍ ESTÁ LA MAGIA ---
+                # Escapamos cualquier carácter especial en el título y los asistentes
+                titulo = escape_markdown(str(evento.get('titulo', 'Evento sin título')), version=2)
+                hora = escape_markdown(str(evento.get('hora', 'Sin hora')), version=2)
+                
+                asistentes_lista = [escape_markdown(str(a.get('nombre', 'Anónimo')), version=2) for a in evento.get("asistentes", [])]
+                asistentes = ', '.join(asistentes_lista)
+                # -------------------------
+                
+                # Usamos las variables "limpias" y seguras
+                mensaje += f"  🕑 `{hora}` - {titulo}\n"
                 if asistentes:
                     mensaje += f"  👥 _{asistentes}_\n"
             mensaje += "\n"
+            
     await query.edit_message_text(mensaje, parse_mode="Markdown")
 
 # --- Flujo de Creación de Eventos ---
@@ -131,17 +144,23 @@ async def inscribirme_menu(query: Update.callback_query):
     """Muestra los eventos a los que un usuario se puede inscribir."""
     eventos_por_fecha = agenda_manager.obtener_eventos_activos()
     keyboard = []
-    for fecha_str, eventos_con_idx in eventos_por_fecha.items():
-        for idx, evento in eventos_con_idx:
+    
+    for fecha_str, eventos in eventos_por_fecha.items():
+        for idx, evento in enumerate(eventos):
+            # --- HEMOS ELIMINADO EL FILTRO 'if' QUE ESTABA AQUÍ ---
+            # Ahora todos los eventos aparecen en la lista, incluso los creados por ti.
             fecha_corta = datetime.strptime(fecha_str, '%Y-%m-%d').strftime('%d/%m')
             texto = f"({fecha_corta}) {evento['hora']} - {evento['titulo']}"
             callback_data = f"inscribirse|{fecha_str}|{idx}"
             keyboard.append([InlineKeyboardButton(texto, callback_data=callback_data)])
     
     if not keyboard:
-        await query.edit_message_text("ℹ️ No hay eventos disponibles para inscribirse ahora mismo.")
+        await query.edit_message_text("ℹ️ ¡Aúpa! Parece que no hay eventos disponibles para apuntarse ahora mismo.")
         return
-    await query.edit_message_text("Elige un evento para apuntarte:", reply_markup=InlineKeyboardMarkup(keyboard))
+        
+    await query.edit_message_text("¡Majo! Elige un evento para apuntarte:", reply_markup=InlineKeyboardMarkup(keyboard))
+
+
 
 async def darse_baja_menu(query: Update.callback_query):
     """Muestra al usuario los eventos en los que está inscrito para darse de baja."""

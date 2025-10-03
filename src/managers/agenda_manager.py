@@ -9,6 +9,7 @@ locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
 
 # Importamos la ruta del archivo desde nuestra configuración centralizada
 from src.config import settings
+from src.managers import user_manager
 
 # El estado de la agenda (la variable) vive y se gestiona únicamente aquí
 agenda = defaultdict(list)
@@ -83,14 +84,16 @@ def desinscribir_usuario(fecha: str, idx: int, user_id: int):
 
 # --- Funciones para obtener datos de la agenda ---
 
+# src/managers/agenda_manager.py
+# ... (imports) ...
+
 def obtener_eventos_activos(fecha_inicio: str = None, fecha_fin: str = None):
     """
-    Devuelve un resumen en texto de los eventos activos.
-    Si se especifican fechas, busca en ese rango.
-    Si no, busca en los próximos 14 días.
+    Devuelve un DICCIONARIO de eventos activos.
+    Si se especifican fechas, busca en ese rango. Si no, en los próximos 14 días.
     """
     eventos_por_fecha = {}
-    hoy = datetime.today().date() # Usamos .date() para ignorar la hora
+    hoy = datetime.today().date()
 
     if fecha_inicio and fecha_fin:
         try:
@@ -99,9 +102,8 @@ def obtener_eventos_activos(fecha_inicio: str = None, fecha_fin: str = None):
             dias_a_buscar = (end_date - start_date).days + 1
             fechas = [start_date + timedelta(days=i) for i in range(dias_a_buscar)]
         except ValueError:
-            return "Las fechas proporcionadas no tienen el formato AAAA-MM-DD correcto."
+            return {} # Devuelve un diccionario vacío si las fechas son incorrectas
     else:
-        # Comportamiento por defecto: próximos 14 días
         fechas = [hoy + timedelta(days=i) for i in range(14)]
 
     for fecha in fechas:
@@ -110,24 +112,8 @@ def obtener_eventos_activos(fecha_inicio: str = None, fecha_fin: str = None):
             eventos_activos = [e for e in agenda[clave_fecha] if e.get('activo', True)]
             if eventos_activos:
                 eventos_por_fecha[clave_fecha] = eventos_activos
-    
-    if not eventos_por_fecha:
-        return "No he encontrado eventos programados para las fechas solicitadas."
 
-    # Formateamos la salida como un texto legible (esta parte no cambia)
-    resumen = "Aquí tienes los eventos encontrados:\n"
-    for fecha_str, eventos in eventos_por_fecha.items():
-        fecha_dt = datetime.strptime(fecha_str, "%Y-%m-%d")
-        nombre_dia = format_datetime(fecha_dt, "EEEE, d 'de' MMMM", locale="es").capitalize()
-        resumen += f"\n- {nombre_dia}:\n"
-        for evento in eventos:
-            asistentes = [a.get('nombre', 'Anónimo') for a in evento["asistentes"]]
-            resumen += f"  - {evento['hora']} - {evento['titulo']}"
-            if asistentes:
-                resumen += f" (Asisten: {', '.join(asistentes)})\n"
-            else:
-                resumen += "\n"
-    return resumen
+    return eventos_por_fecha # <-- Devuelve el diccionario con los datos
 
 def obtener_eventos_inscrito(user_id: int, dias: int = 30):
     """Devuelve los eventos en los que un usuario está inscrito."""

@@ -216,6 +216,20 @@
           "nombre": "Cristina"
         }
       ]
+    },
+    {
+      "hora": "13:00",
+      "titulo": "🚀¡El Disparo del cohete de San Mateo en la Plaza del Ayuntamiento! Después por la tarde - 🎸Parrilla Rock, para los más rockeros.",
+      "asistentes": [],
+      "creador_id": 7014104426,
+      "activo": true
+    },
+    {
+      "hora": "22:30",
+      "titulo": "🎶Conciertazo de Los 40 San Mateo con Dani Moreno \"El Gallo\".",
+      "asistentes": [],
+      "creador_id": 7014104426,
+      "activo": true
     }
   ],
   "2025-09-18": [
@@ -225,6 +239,193 @@
       "asistentes": [],
       "creador_id": 7014104426,
       "activo": false
+    }
+  ],
+  "2025-09-19": [
+    {
+      "hora": "17:00",
+      "titulo": "Volar un piano",
+      "asistentes": [
+        {
+          "id": 7014104426,
+          "nombre": "Jesús",
+          "username": "nimexdev"
+        }
+      ],
+      "creador_id": 7014104426,
+      "activo": false
+    },
+    {
+      "hora": "19:00",
+      "titulo": "🍻¡Arranca la Feria de la cerveza artesana en el Parque Santa Juliana!",
+      "asistentes": [],
+      "creador_id": 7014104426,
+      "activo": true
+    },
+    {
+      "hora": "20:00",
+      "titulo": "🎵 Concierto de Guillermo y Sara en el Parque Gallarza.",
+      "asistentes": [],
+      "creador_id": 7014104426,
+      "activo": true
+    },
+    {
+      "hora": "21:00",
+      "titulo": "🍷Inauguración de la Fuente del Vino en la Gran Vía, ¡un clásico!",
+      "asistentes": [],
+      "creador_id": 7014104426,
+      "activo": true
+    },
+    {
+      "hora": "23:45",
+      "titulo": "Llamada grupal",
+      "asistentes": [],
+      "creador_id": 7014104426.0,
+      "activo": true
+    }
+  ],
+  "2025-09-21": [
+    {
+      "hora": "13:00",
+      "titulo": "🥁Vermú musical con Batukada en la Plaza Escuelas Trevijano.",
+      "asistentes": [],
+      "creador_id": 7014104426,
+      "activo": true
+    },
+    {
+      "hora": "18:00",
+      "titulo": "💃Festival folclórico de las Casas Regionales en el Paseo del Espolón.",
+      "asistentes": [],
+      "creador_id": 7014104426,
+      "activo": true
+    }
+  ],
+  "2025-09-22": [
+    {
+      "hora": "11:00",
+      "titulo": "🥘Tradicional Concurso de Calderetas Riojanas. ¡A ver quién guisa mejor!",
+      "asistentes": [],
+      "creador_id": 7014104426,
+      "activo": true
+    },
+    {
+      "hora": "09:00",
+      "titulo": "🍫 Degustación de chocolate con moscatel y bizcochos. ¡Para empezar el día con energía! (Peña La Unión)",
+      "asistentes": [],
+      "creador_id": 7014104426,
+      "activo": true
+    },
+    {
+      "hora": "11:00",
+      "titulo": "🚶‍♂️ Pasacalles de Gigantes y Cabezudos. Un clásico que no te puedes perder por el centro.",
+      "asistentes": [],
+      "creador_id": 7014104426,
+      "activo": true
+    },
+    {
+      "hora": "19:00",
+      "titulo": "⚾ Feria de Pelota a mano profesional en el Frontón Adarraga. ¡ ambientazo!",
+      "asistentes": [],
+      "creador_id": 7014104426,
+      "activo": true
+    },
+    {
+      "hora": "22:30",
+      "titulo": "🎆 Concurso internacional de fuegos artificiales en el Parque de la Ribera.",
+      "asistentes": [],
+      "creador_id": 7014104426,
+      "activo": true
+    }
+  ],
+  "2025-09-23": [
+    {
+      "hora": "10:00",
+      "titulo": "🍢 Festival del pincho moruno en la Plaza del Mercado. ¡A coger fuerzas!",
+      "asistentes": [],
+      "creador_id": 7014104426,
+      "activo": true
+    },
+    {
+      "hora": "11:30",
+      "titulo": "💧 Peque San Mateo con fiesta de la espuma en la Plaza del Ayuntamiento. ¡Para los más pequeños (y los no tanto)!",
+      "asistentes": [],
+      "creador_id": 7014104426,
+      "activo": true
+    },
+    {
+      "hora": "18:00",
+      "titulo": "🐂 Corrida de Toros con Diego Urdiales y Roca Rey en la Plaza de Toros",
+      "asistentes": [],
+      "creador_id": 7014104426,
+      "activo": true
+    },
+    {
+      "hora": "21:00",
+      "titulo": "🎤 Concierto Tributo al Pop Rock de la Banda de Música de Logroño en el Espolón.",
+      "asistentes": [],
+      "creador_id": 7014104426,
+      "activo": true
+    },
+    {
+      "hora": "22:30",
+      "titulo": "🎆 Otra noche de fuegos artificiales en el Parque de la Ribera.",
+      "asistentes": [],
+      "creador_id": 7014104426,
+      "activo": true
+    }
+  ],
+  "2025-09-24": [
+    {
+      "hora": "11:00",
+      "titulo": "🦆 Degustación de confit de pato con reducción de vino de Rioja. ¡Qué hermosura! (Plaza del Mercado).",
+      "asistentes": [],
+      "creador_id": 7014104426,
+      "activo": true
+    },
+    {
+      "hora": "18:00",
+      "titulo": "🤹‍♂️ Fiesta infantil con concurso de recortes con carretones y talleres en el Parque de la Cometa.",
+      "asistentes": [],
+      "creador_id": 7014104426,
+      "activo": true
+    },
+    {
+      "hora": "20:00",
+      "titulo": "🍇 Pisado Popular de la uva en la Plaza del Ayuntamiento. ¡El corazón de la vendimia!",
+      "asistentes": [],
+      "creador_id": 7014104426,
+      "activo": true
+    },
+    {
+      "hora": "19:00",
+      "titulo": "Tomar algo por el centro",
+      "asistentes": [],
+      "creador_id": 7927898328,
+      "activo": true
+    }
+  ],
+  "2025-10-04": [
+    {
+      "hora": "21:30",
+      "titulo": ".",
+      "asistentes": [
+        {
+          "id": 7927898328,
+          "nombre": "Juan José",
+          "username": "Visontino"
+        }
+      ],
+      "creador_id": 7014104426,
+      "activo": true
+    }
+  ],
+  "2025-10-03": [
+    {
+      "hora": "21:30",
+      "titulo": "Concierto de Antilopez en Bilbao, Azquena",
+      "asistentes": [],
+      "creador_id": 7014104426.0,
+      "activo": true
     }
   ]
 }
