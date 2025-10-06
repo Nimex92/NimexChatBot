@@ -8,14 +8,15 @@ from src.managers import ai_manager
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.effective_user
     nombre = user.first_name or "majo"
+    bot_username = context.bot.username
     saludo = (
-        f"¡Aúpa, [{nombre}](tg://user?id={user.id})! 👋 Soy Nimex, tu asistente riojano con memoria 🧠 y agenda 📅 integrada.\n\n"
-        f"Puedes usar el comando /agenda para empezar o, si estoy en un grupo, **mencióname con @{bot_username}** y dime qué necesitas. Por ejemplo:\n"
+        f"¡Aúpa, [{nombre}](tg://user?id={user.id})! 👋 Soy Nimex, tu asistente riojano con memoria 🧠 y agenda 📅 integrada\.\n\n"
+        f"Puedes usar el comando /agenda para empezar o, si estoy en un grupo, *mencióname con @{bot_username}* y dime qué necesitas\. Por ejemplo:\n"
         f"`@{bot_username} crea un evento para el sábado a las 20:00 para cenar`\n\n"
-        "Además, estaré echando un ojo al chat para mantener el buen rollo. 😉\n\n"
+        "Además, estaré echando un ojo al chat para mantener el buen rollo\. 😉\n\n"
         "¡Organízate fácil y rápido! 🚀"
     )
-    await update.message.reply_text(saludo.format(context=context), parse_mode="Markdown")
+    await update.message.reply_text(saludo, parse_mode="MarkdownV2")
 
 async def saludar_nuevo_miembro(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Da la bienvenida a los nuevos miembros que se unen al chat."""
@@ -53,4 +54,4 @@ async def handle_mention(update: Update, context: ContextTypes.DEFAULT_TYPE):
         # 3. Llamamos a la IA como antes, pero respondiendo al mensaje original
         await update.message.chat.send_action('typing')
         response_text = await ai_manager.process_user_prompt(prompt, user_id)
-        await update.message.reply_text(response_text)
+        await update.message.reply_text(response_text, parse_mode="Markdown")

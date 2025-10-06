@@ -14,7 +14,7 @@ import datetime
 # Importamos desde nuestra nueva estructura en 'src'
 from src.config import settings
 from src.managers import agenda_manager, user_manager
-from src.handlers import general_handlers, agenda_handlers
+from src.handlers import general_handlers, agenda_handlers, group_handlers
 
 async def track_activity_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     if update.effective_user:
@@ -35,6 +35,7 @@ async def main() -> None:
     # --- Registrar Handlers ---
     app.add_handler(CommandHandler("start", general_handlers.start))
     app.add_handler(CommandHandler("agenda", agenda_handlers.agenda_menu))
+    app.add_handler(CommandHandler("get_group_id", group_handlers.get_group_id_command))
     app.add_handler(CallbackQueryHandler(agenda_handlers.main_agenda_callback_handler))
 
     # --- CAMBIO CLAVE: Quitamos /ia y añadimos el manejador de menciones ---

@@ -72,7 +72,7 @@ async def mostrar_agenda(query: Update.callback_query):
     mensaje = "📅 *Agenda de Próximos Eventos*\n\n"
     
     if not eventos_por_fecha:
-        mensaje += "_No hay nada programado._"
+        mensaje += "_No hay nada programado_\."
     else:
         for fecha_str, eventos in eventos_por_fecha.items():
             fecha_dt = datetime.strptime(fecha_str, "%Y-%m-%d")
@@ -90,12 +90,12 @@ async def mostrar_agenda(query: Update.callback_query):
                 # -------------------------
                 
                 # Usamos las variables "limpias" y seguras
-                mensaje += f"  🕑 `{hora}` - {titulo}\n"
+                mensaje += f"  🕑 `{hora}` \- {titulo}\n"
                 if asistentes:
                     mensaje += f"  👥 _{asistentes}_\n"
             mensaje += "\n"
             
-    await query.edit_message_text(mensaje, parse_mode="Markdown")
+    await query.edit_message_text(mensaje, parse_mode="MarkdownV2")
 
 # --- Flujo de Creación de Eventos ---
 
@@ -134,9 +134,9 @@ async def guardar_hora_y_pedir_nombre(query: Update.callback_query, context: Con
     fecha_dt = datetime.strptime(context.user_data['nuevo_evento']['fecha'], "%Y-%m-%d")
     fecha_texto = format_datetime(fecha_dt, "EEEE d", locale="es")
     
-    await query.edit_message_text(f"Perfecto. Evento para el *{fecha_texto} a las {hora}*.\n\n"
-                                  "PASO 3: Ahora, dime en un mensaje el nombre o título del evento.",
-                                  parse_mode="Markdown")
+    await query.edit_message_text(f"Perfecto\. Evento para el *{fecha_texto} a las {hora}*\.\n\n"
+                                  "PASO 3: Ahora, dime en un mensaje el nombre o título del evento\.",
+                                  parse_mode="MarkdownV2")
 
 # --- Flujos de Inscripción, Baja y Eliminación ---
 
