@@ -121,3 +121,22 @@ async def process_user_prompt(prompt: str, user_id: int):
         print("🚨 ¡Leñe\ Error en el flujo de IA. El traceback completo es:")
         traceback.print_exc()
         return f"¡Ay va\ Ha habido un problemilla técnico al procesar tu petición. Detalles: {e}"
+
+async def generate_text(prompt: str) -> str:
+    """
+    Genera texto simple a partir de un prompt, sin usar herramientas.
+    """
+    if not settings.GEMINI_API_KEY:
+        return "La integración con la IA no está configurada (falta la API Key de Gemini)."
+    
+    try:
+        # Usamos un modelo específico para generación de texto simple si es necesario,
+        # o el mismo modelo pero sin el system_instruction complejo si es posible.
+        # Por simplicidad, aquí usamos el mismo modelo pero en un chat "vacío".
+        chat = model.start_chat()
+        response = await chat.send_message_async(prompt)
+        return response.text
+    except Exception as e:
+        print(f"🚨 Error al generar texto simple: {e}")
+        traceback.print_exc()
+        return "¡Ay va! No he podido generar el texto. Algo ha fallado."

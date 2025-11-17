@@ -12,6 +12,7 @@ GEMINI_API_KEY = os.getenv("GEMINI_API_KEY") # <-- AÑADIR
 # --- Rutas ---
 AGENDA_FILE = "data/agenda.json"
 USERS_FILE = "data/users.json"
+DEBATE_FILE = "data/debate.json"
 
 # --- Configuración del Módulo de Usuarios ---
 GROUP_CHAT_ID = int(os.getenv("GROUP_CHAT_ID", 0))
