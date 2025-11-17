@@ -6,3 +6,6 @@ __pycache__/
 .DS_Store
 .env
 .backup
+data/users.json
+data/agenda.json
+data/debate.json

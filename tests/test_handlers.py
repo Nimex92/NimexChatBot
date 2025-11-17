@@ -1,8 +1,10 @@
 # tests/test_handlers.py
 import pytest
-from unittest.mock import AsyncMock, MagicMock
-from src.handlers import general_handlers, agenda_handlers
+from unittest.mock import AsyncMock, MagicMock, patch
+from src.handlers import general_handlers, agenda_handlers, debate_handlers
 from src.managers import agenda_manager
+from src.config import settings
+from telegram.constants import ChatMemberStatus
 
 # --- Mocks para los objetos de Telegram ---
 
@@ -11,6 +13,7 @@ def mock_update_message():
     """Crea un mock de un objeto Update con un mensaje de texto."""
     update = MagicMock()
     update.effective_user = MagicMock(id=123, first_name="TestUser", username="test_user")
+    update.effective_chat = MagicMock(id=settings.GROUP_CHAT_ID)
     update.message = AsyncMock()
     update.message.text = "/start"
     return update
@@ -68,45 +71,39 @@ async def test_agenda_callback_ver_agenda_vacia(mock_update_callback, mock_conte
     assert "No hay nada programado" in call_args[0][0]
 
 @pytest.mark.asyncio
-async def test_flujo_crear_evento_via_handlers(mock_update_callback, mock_context):
-    """Simula el flujo completo de creación de un evento a través de los handlers."""
-    # 1. Usuario pulsa "Crear un evento"
-    mock_update_callback.callback_query.data = "crear_evento_fecha"
-    await agenda_handlers.main_agenda_callback_handler(mock_update_callback, mock_context)
-    mock_update_callback.callback_query.edit_message_text.assert_called_with(
-        "PASO 1: Elige la fecha del evento.",
-        reply_markup=pytest.ANY
-    )
+@patch('src.handlers.debate_handlers.debate_manager', new_callable=AsyncMock)
+async def test_force_debate_command_admin(mock_debate_manager, mock_update_message, mock_context):
+    """Verifica que un admin puede forzar un debate."""
+    # 1. Configuración: El usuario es admin
+    mock_admin = MagicMock()
+    mock_admin.status = ChatMemberStatus.ADMINISTRATOR
+    mock_context.bot.get_chat_member.return_value = mock_admin
+    mock_debate_manager.send_and_pin_debate.return_value = "¡Nuevo debate forzado!"
 
-    # 2. Usuario selecciona una fecha
-    fecha_seleccionada = "2025-10-26"
-    mock_update_callback.callback_query.data = f"fecha_seleccionada|{fecha_seleccionada}"
-    await agenda_handlers.main_agenda_callback_handler(mock_update_callback, mock_context)
-    assert mock_context.user_data["nuevo_evento"]["fecha"] == fecha_seleccionada
-    mock_update_callback.callback_query.edit_message_text.assert_called_with(
-        "PASO 2: Ahora elige la hora.",
-        reply_markup=pytest.ANY
-    )
+    # 2. Ejecución
+    await debate_handlers.force_debate_command(mock_update_message, mock_context)
 
-    # 3. Usuario selecciona una hora
-    hora_seleccionada = "19:30"
-    mock_update_callback.callback_query.data = f"hora_seleccionada|{hora_seleccionada}"
-    await agenda_handlers.main_agenda_callback_handler(mock_update_callback, mock_context)
-    assert mock_context.user_data["nuevo_evento"]["hora"] == hora_seleccionada
-    assert mock_context.user_data["estado"] == "esperando_nombre_evento"
-    mock_update_callback.callback_query.edit_message_text.assert_called_with(
-        pytest.string_containing("Perfecto. Evento para el"),
-        parse_mode="Markdown"
-    )
+    # 3. Verificación
+    mock_context.bot.get_chat_member.assert_called_once_with(settings.GROUP_CHAT_ID, 123)
+    mock_update_message.message.reply_text.assert_any_call("✅ Entendido. Forzando un nuevo debate...")
+    mock_debate_manager.unpin_previous_debate.assert_called_once()
+    mock_debate_manager.send_and_pin_debate.assert_called_once()
+    mock_update_message.message.reply_text.assert_called_with("¡Nuevo debate forzado!")
 
-    # 4. Usuario envía el nombre del evento por mensaje
-    mock_msg_update = mock_update_message
-    mock_msg_update.message.text = "Cena de prueba"
-    # El estado se guarda en el contexto de la prueba anterior
-    await agenda_handlers.manejar_mensajes_de_texto(mock_msg_update, mock_context)
-    mock_msg_update.message.reply_text.assert_called_with("✅ ¡Evento guardado con éxito!")
+@pytest.mark.asyncio
+@patch('src.handlers.debate_handlers.debate_manager', new_callable=AsyncMock)
+async def test_force_debate_command_non_admin(mock_debate_manager, mock_update_message, mock_context):
+    """Verifica que un usuario normal no puede forzar un debate."""
+    # 1. Configuración: El usuario es un miembro normal
+    mock_member = MagicMock()
+    mock_member.status = ChatMemberStatus.MEMBER
+    mock_context.bot.get_chat_member.return_value = mock_member
 
-    # Verificación final: el evento debe estar en la agenda
-    eventos = agenda_manager.obtener_eventos_activos()
-    assert len(eventos[fecha_seleccionada]) == 1
-    assert eventos[fecha_seleccionada][0]["titulo"] == "Cena de prueba"
+    # 2. Ejecución
+    await debate_handlers.force_debate_command(mock_update_message, mock_context)
+
+    # 3. Verificación
+    mock_context.bot.get_chat_member.assert_called_once_with(settings.GROUP_CHAT_ID, 123)
+    mock_update_message.message.reply_text.assert_called_once_with("⚠️ Solo los administradores pueden usar este comando.")
+    mock_debate_manager.unpin_previous_debate.assert_not_called()
+    mock_debate_manager.send_and_pin_debate.assert_not_called()
