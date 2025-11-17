@@ -16,11 +16,27 @@ from apscheduler.triggers.cron import CronTrigger
 # Importamos desde nuestra nueva estructura en 'src'
 from src.config import settings
 from src.managers import agenda_manager, user_manager, debate_manager
-from src.handlers import general_handlers, agenda_handlers, group_handlers, debate_handlers
+from src.handlers import general_handlers, agenda_handlers, group_handlers, debate_handlers, level_handlers
 
 async def track_activity_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    if update.effective_user:
-        user_manager.update_user_activity(update.effective_user)
+    """
+    Manejador principal que se ejecuta en cada mensaje.
+    Actualiza la actividad del usuario y le otorga XP.
+    """
+    if not update.effective_user or update.effective_user.is_bot:
+        return
+
+    user = update.effective_user
+    chat_id = update.effective_chat.id
+
+    # Actualizamos la última vez que se vio al usuario
+    user_manager.update_user_activity(user)
+
+    # Otorgamos XP y comprobamos si sube de nivel
+    level_up_info = user_manager.grant_xp_on_message(user.id)
+    if level_up_info:
+        await level_handlers.announce_level_up(context, chat_id, level_up_info)
+
 
 # --- Funciones del Debate Diario (ahora actúan como wrappers) ---
 async def send_daily_debate(context: ContextTypes.DEFAULT_TYPE):
@@ -46,13 +62,11 @@ async def main() -> None:
     app = ApplicationBuilder().token(settings.TELEGRAM_TOKEN).build()
 
     # --- Programación de Tareas con APScheduler ---
-    # Pasamos el 'app' como contexto a las tareas para que puedan usar el bot
     scheduler = AsyncIOScheduler(timezone="Europe/Madrid")
     scheduler.add_job(send_daily_debate, CronTrigger(hour=0, minute=0), args=[app])
     scheduler.add_job(unpin_daily_debate, CronTrigger(hour=23, minute=59), args=[app])
     scheduler.start()
     
-    # Tarea de inactividad (usando el job_queue del bot, que es más simple para tareas diarias)
     job_queue = app.job_queue
     job_queue.run_daily(user_manager.check_inactivity_job, time=datetime.time(hour=4, minute=0, second=0))
 
@@ -61,12 +75,14 @@ async def main() -> None:
     app.add_handler(CommandHandler("start", general_handlers.start))
     app.add_handler(CommandHandler("agenda", agenda_handlers.agenda_menu))
     app.add_handler(CommandHandler("get_group_id", group_handlers.get_group_id_command))
-    app.add_handler(CommandHandler("debate", debate_handlers.force_debate_command)) # <-- NUEVO HANDLER
+    app.add_handler(CommandHandler("debate", debate_handlers.force_debate_command))
+    app.add_handler(CommandHandler("nivel", level_handlers.level_command)) # <-- NUEVO HANDLER
     app.add_handler(CallbackQueryHandler(agenda_handlers.main_agenda_callback_handler))
 
     app.add_handler(MessageHandler(filters.TEXT & filters.ChatType.GROUPS, general_handlers.handle_mention), group=1)
     
-    app.add_handler(MessageHandler(filters.ALL, track_activity_handler), group=2)
+    # El manejador de actividad ahora tiene una prioridad más alta para capturar todos los mensajes
+    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, track_activity_handler), group=2)
 
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, agenda_handlers.manejar_mensajes_de_texto), group=3)
     app.add_handler(MessageHandler(filters.StatusUpdate.NEW_CHAT_MEMBERS, general_handlers.saludar_nuevo_miembro), group=3)
@@ -77,14 +93,12 @@ async def main() -> None:
         async with app:
             await app.start()
             await app.updater.start_polling()
-            # Bucle para mantener el script principal vivo y permitir que APScheduler trabaje en segundo plano
             while True:
                 await asyncio.sleep(3600)
     except (KeyboardInterrupt, SystemExit):
         print("\n🔌 Deteniendo el bot y el planificador de tareas...")
         scheduler.shutdown()
         print("✅ Planificador detenido.")
-        # La salida del `async with app` se encargará de detener el bot de forma limpia.
 
 
 if __name__ == "__main__":
