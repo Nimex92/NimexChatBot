@@ -16,48 +16,22 @@ from apscheduler.triggers.cron import CronTrigger
 # Importamos desde nuestra nueva estructura en 'src'
 from src.config import settings
 from src.managers import agenda_manager, user_manager, debate_manager
-from src.handlers import general_handlers, agenda_handlers, group_handlers
+from src.handlers import general_handlers, agenda_handlers, group_handlers, debate_handlers
 
 async def track_activity_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     if update.effective_user:
         user_manager.update_user_activity(update.effective_user)
 
-# --- Funciones del Debate Diario ---
+# --- Funciones del Debate Diario (ahora actúan como wrappers) ---
 async def send_daily_debate(context: ContextTypes.DEFAULT_TYPE):
-    """Genera, envía y ancla el debate del día."""
-    print("⏰ Ejecutando tarea: Enviar debate diario.")
-    try:
-        topic = await debate_manager.generate_debate_topic()
-        message = await context.bot.send_message(
-            chat_id=settings.GROUP_CHAT_ID,
-            text=f"🤔 DEBATE DEL DÍA 🤔\n\n{topic}"
-        )
-        await context.bot.pin_chat_message(
-            chat_id=settings.GROUP_CHAT_ID,
-            message_id=message.message_id
-        )
-        debate_manager.set_last_debate_message_id(message.message_id)
-        print(f"✅ Debate enviado y anclado. ID: {message.message_id}")
-    except Exception as e:
-        print(f"🚨 Error al enviar el debate diario: {e}")
+    """Job diario que llama al manager para enviar y anclar el debate."""
+    print("⏰ Ejecutando tarea programada: Enviar debate diario.")
+    await debate_manager.send_and_pin_debate(context.bot, settings.GROUP_CHAT_ID)
 
 async def unpin_daily_debate(context: ContextTypes.DEFAULT_TYPE):
-    """Desancla el debate del día anterior."""
-    print("⏰ Ejecutando tarea: Desanclar debate anterior.")
-    last_message_id = debate_manager.get_last_debate_message_id()
-    if last_message_id:
-        try:
-            await context.bot.unpin_chat_message(
-                chat_id=settings.GROUP_CHAT_ID,
-                message_id=last_message_id
-            )
-            debate_manager.set_last_debate_message_id(None)
-            print(f"✅ Debate desanclado. ID: {last_message_id}")
-        except Exception as e:
-            # Es común que el mensaje ya no exista o no se pueda desanclar, lo logeamos como info
-            print(f"ℹ️ No se pudo desanclar el debate. Quizás fue borrado. ID: {last_message_id}. Error: {e}")
-    else:
-        print("ℹ️ No había debate anterior para desanclar.")
+    """Job diario que llama al manager para desanclar el debate anterior."""
+    print("⏰ Ejecutando tarea programada: Desanclar debate anterior.")
+    await debate_manager.unpin_previous_debate(context.bot, settings.GROUP_CHAT_ID)
 
 
 async def main() -> None:
@@ -87,6 +61,7 @@ async def main() -> None:
     app.add_handler(CommandHandler("start", general_handlers.start))
     app.add_handler(CommandHandler("agenda", agenda_handlers.agenda_menu))
     app.add_handler(CommandHandler("get_group_id", group_handlers.get_group_id_command))
+    app.add_handler(CommandHandler("debate", debate_handlers.force_debate_command)) # <-- NUEVO HANDLER
     app.add_handler(CallbackQueryHandler(agenda_handlers.main_agenda_callback_handler))
 
     app.add_handler(MessageHandler(filters.TEXT & filters.ChatType.GROUPS, general_handlers.handle_mention), group=1)

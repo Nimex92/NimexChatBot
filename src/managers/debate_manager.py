@@ -1,6 +1,7 @@
 # src/managers/debate_manager.py
 import json
 import os
+from telegram import Bot
 from src.config import settings
 from src.managers.ai_manager import generate_text
 
@@ -58,3 +59,42 @@ def set_last_debate_message_id(message_id: int | None):
     global debate_data
     debate_data["last_message_id"] = message_id
     save_debate_data()
+
+async def send_and_pin_debate(bot: Bot, chat_id: int):
+    """
+    Orquesta la generación, envío y anclaje de un nuevo debate.
+    """
+    print("🚀 Iniciando ciclo de envío de debate...")
+    try:
+        topic = await generate_debate_topic()
+        message = await bot.send_message(
+            chat_id=chat_id,
+            text=f"🤔 DEBATE DEL DÍA 🤔\n\n{topic}"
+        )
+        await bot.pin_chat_message(
+            chat_id=chat_id,
+            message_id=message.message_id
+        )
+        set_last_debate_message_id(message.message_id)
+        print(f"✅ Debate enviado y anclado. ID: {message.message_id}")
+        return f"¡Nuevo debate iniciado!\n\n{topic}"
+    except Exception as e:
+        print(f"🚨 Error al enviar y anclar el debate: {e}")
+        return "❌ Uups! Hubo un error al intentar iniciar el debate."
+
+async def unpin_previous_debate(bot: Bot, chat_id: int):
+    """Desancla el debate del día anterior."""
+    print("🧹 Limpiando debate anterior...")
+    last_message_id = get_last_debate_message_id()
+    if last_message_id:
+        try:
+            await bot.unpin_chat_message(
+                chat_id=chat_id,
+                message_id=last_message_id
+            )
+            set_last_debate_message_id(None)
+            print(f"✅ Debate desanclado. ID: {last_message_id}")
+        except Exception as e:
+            print(f"ℹ️ No se pudo desanclar el debate. Quizás fue borrado. ID: {last_message_id}. Error: {e}")
+    else:
+        print("ℹ️ No había debate anterior para desanclar.")
