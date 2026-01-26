@@ -10,7 +10,7 @@ import locale
 locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
 
 # Importamos el manager, que es el único que habla con la agenda
-from src.managers import agenda_manager
+from src.managers import agenda_manager, user_manager
 # Importamos el handler del chat para derivar los mensajes que no son de la agenda
 from src.handlers import general_handlers
 
@@ -21,6 +21,12 @@ async def main_agenda_callback_handler(update: Update, context: ContextTypes.DEF
     Una única función que recibe todos los callbacks y los distribuye.
     """
     query = update.callback_query
+    
+    # Verificación de usuario
+    if not user_manager.is_verified(query.from_user.id):
+        await query.answer("⚠️ Debes presentarte al grupo antes de usar la agenda. ¡Di hola!", show_alert=True)
+        return
+
     await query.answer()
     
     # Formato del callback: "accion|param1|param2|..."
@@ -57,6 +63,11 @@ async def main_agenda_callback_handler(update: Update, context: ContextTypes.DEF
 
 async def agenda_menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Muestra el menú principal de la agenda."""
+    # Verificación de usuario
+    if not user_manager.is_verified(update.effective_user.id):
+        await update.message.reply_text("🔒 ¡Alto ahí! Antes de poder ver la agenda, tienes que presentarte al grupo. Cuéntanos algo breve sobre ti.")
+        return
+
     keyboard = [
         [InlineKeyboardButton("📅 Ver agenda", callback_data='ver_agenda')],
         [InlineKeyboardButton("✍️ Crear un evento", callback_data='crear_evento_fecha')],
@@ -234,6 +245,10 @@ async def manejar_mensajes_de_texto(update: Update, context: ContextTypes.DEFAUL
     """
     user_id = update.effective_user.id
     estado = context.user_data.get('estado')
+    
+    # Si no tiene estado y no está verificado, ignoramos (ya se manejó en check_presentation)
+    if not estado and not user_manager.is_verified(user_id):
+        return
 
     if estado == 'esperando_nombre_evento':
         titulo_evento = update.message.text

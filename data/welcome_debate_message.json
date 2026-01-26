@@ -1,0 +1,17 @@
+[
+  "¡Hola {mentions}! ¿Qué opináis de esto: *{topic}*?",
+  "¡Aúpa {mentions}! Queremos saber vuestra opinión sobre: *{topic}*",
+  "¿Qué nos decís {mentions}? El tema está calentito: *{topic}*",
+  "¡Atención {mentions}! Toca mojarse: *{topic}*",
+  "{mentions}, el pueblo reclama vuestra sabiduría sobre: *{topic}*",
+  "¡Epa {mentions}! Dejad lo que estéis haciendo y opinad: *{topic}*",
+  "¿A favor o en contra? {mentions}, pronunciaros sobre: *{topic}*",
+  "¡Eh, {mentions}! No os hagáis los suecos, ¿qué pensáis de *{topic}*?",
+  "¡{mentions}! ¿Cómo veis el debate de hoy? 👉 *{topic}*",
+  "A ver, {mentions}, que os veo muy callados. ¿Qué decís de *{topic}*?",
+  "¡{mentions}! Sacad vuestro lado crítico: *{topic}*",
+  "{mentions}, venid aquí un momento. ¿Qué os parece *{topic}*?",
+  "¿Vosotros qué haríais, {mentions}? El tema es: *{topic}*",
+  "¡{mentions}! Iluminadnos con vuestra opinión sobre *{topic}*",
+  "{mentions}, no vale decir 'pasapalabra'. ¿Qué opináis de *{topic}*?"
+]

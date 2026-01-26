@@ -10,8 +10,6 @@ from telegram.ext import (
     filters,
     ContextTypes
 )
-from apscheduler.schedulers.asyncio import AsyncIOScheduler
-from apscheduler.triggers.cron import CronTrigger
 
 # Importamos desde nuestra nueva estructura en 'src'
 from src.config import settings
@@ -61,14 +59,16 @@ async def main() -> None:
 
     app = ApplicationBuilder().token(settings.TELEGRAM_TOKEN).build()
 
-    # --- Programación de Tareas con APScheduler ---
-    scheduler = AsyncIOScheduler(timezone="Europe/Madrid")
-    scheduler.add_job(send_daily_debate, CronTrigger(hour=0, minute=0), args=[app])
-    scheduler.add_job(unpin_daily_debate, CronTrigger(hour=23, minute=59), args=[app])
-    scheduler.start()
-    
+    # --- Programación de Tareas con JobQueue (Nativo de PTB) ---
     job_queue = app.job_queue
+    
+    # Tarea de inactividad (04:00)
     job_queue.run_daily(user_manager.check_inactivity_job, time=datetime.time(hour=4, minute=0, second=0))
+    
+    # Tareas de Debate (00:00 y 23:59)
+    # Nota: Usamos datetime.time para la hora. PTB maneja la zona horaria si se configura (defaults to local/UTC).
+    job_queue.run_daily(send_daily_debate, time=datetime.time(hour=0, minute=0, second=0))
+    job_queue.run_daily(unpin_daily_debate, time=datetime.time(hour=23, minute=59, second=0))
 
 
     # --- Registrar Handlers ---
@@ -79,11 +79,18 @@ async def main() -> None:
     app.add_handler(CommandHandler("nivel", level_handlers.level_command)) # <-- NUEVO HANDLER
     app.add_handler(CallbackQueryHandler(agenda_handlers.main_agenda_callback_handler))
 
+    # --- Handlers de Mensajes ---
+
+    # 0. Verificación de nuevos usuarios (Alta prioridad)
+    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND & filters.ChatType.GROUPS, general_handlers.check_presentation), group=0)
+
+    # 1. Menciones al bot
     app.add_handler(MessageHandler(filters.TEXT & filters.ChatType.GROUPS, general_handlers.handle_mention), group=1)
     
-    # El manejador de actividad ahora tiene una prioridad más alta para capturar todos los mensajes
-    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, track_activity_handler), group=2)
+    # 2. Tracking de actividad (XP) - Ahora incluye comandos (filters.TEXT)
+    app.add_handler(MessageHandler(filters.TEXT, track_activity_handler), group=2)
 
+    # 3. Otros manejadores de texto y bienvenida
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, agenda_handlers.manejar_mensajes_de_texto), group=3)
     app.add_handler(MessageHandler(filters.StatusUpdate.NEW_CHAT_MEMBERS, general_handlers.saludar_nuevo_miembro), group=3)
 
@@ -92,13 +99,28 @@ async def main() -> None:
     try:
         async with app:
             await app.start()
-            await app.updater.start_polling()
-            while True:
-                await asyncio.sleep(3600)
+            
+            # --- Comprobación de Debate al Inicio ---
+            # Si el bot se ha reiniciado y no hay debate hoy, lo lanza.
+            await debate_manager.check_and_run_startup_debate(app.bot, settings.GROUP_CHAT_ID)
+            
+            # --- Programar Incitación al Debate (Loop aleatorio) ---
+            debate_manager.schedule_next_incitement(app.job_queue)
+            
+            # drop_pending_updates=True ignora mensajes acumulados mientras el bot estaba apagado
+            await app.updater.start_polling(drop_pending_updates=True)
+            
+            # Mantenemos el bot corriendo hasta que se reciba una señal de parada
+            # Usamos un Event para esperar limpiamente en lugar de sleep loop
+            stop_signal = asyncio.Event()
+            await stop_signal.wait()
+            
     except (KeyboardInterrupt, SystemExit):
-        print("\n🔌 Deteniendo el bot y el planificador de tareas...")
-        scheduler.shutdown()
-        print("✅ Planificador detenido.")
+        print("\n🔌 Deteniendo el bot...")
+        if app.updater.running:
+            await app.updater.stop()
+        if app.running:
+            await app.stop()
 
 
 if __name__ == "__main__":

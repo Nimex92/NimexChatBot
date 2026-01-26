@@ -1,6 +1,7 @@
 # src/managers/user_manager.py
 import json
 import os
+import random
 from datetime import datetime, timedelta
 from time import time
 from telegram.ext import ContextTypes
@@ -41,7 +42,8 @@ def update_user_activity(user):
             "lives": 3,
             "level": 1,
             "xp": 0,
-            "last_xp_timestamp": 0
+            "last_xp_timestamp": 0,
+            "status": "pending_presentation" # Por defecto, nuevos usuarios deben presentarse
         }
     
     user_data = users_db[user_id]
@@ -119,6 +121,51 @@ def get_user_level_info(user_id: int) -> dict | None:
         "xp_base_level": xp_for_current_level,
         "xp_next_level": xp_for_next_level
     }
+
+def get_random_verified_users(count: int = 3) -> list[dict]:
+    """
+    Devuelve una lista aleatoria de usuarios verificados.
+    Cada elemento es un dict con 'id' y 'name' (o username).
+    """
+    verified_users = []
+    for uid, data in users_db.items():
+        if data.get("status") == "verified":
+            # Preferimos first_name, si no username, si no "Usuario"
+            name = data.get("first_name") or data.get("username") or "Usuario"
+            verified_users.append({"id": uid, "name": name})
+    
+    if not verified_users:
+        return []
+    
+    # Seleccionamos aleatoriamente hasta 'count' usuarios
+    sample_size = min(len(verified_users), count)
+    return random.sample(verified_users, sample_size)
+
+# --- Funciones de Estado (Verificación) ---
+
+def set_user_status(user_id: int, status: str):
+    """
+    Establece el estado de verificación de un usuario.
+    Estados: 'verified', 'pending_presentation', 'warned'
+    """
+    user_id_str = str(user_id)
+    if user_id_str in users_db:
+        users_db[user_id_str]["status"] = status
+        save_users()
+
+def get_user_status(user_id: int) -> str:
+    """
+    Obtiene el estado de verificación de un usuario.
+    Por defecto, si no tiene estado, se asume 'verified' (para usuarios antiguos).
+    """
+    user_id_str = str(user_id)
+    if user_id_str in users_db:
+        return users_db[user_id_str].get("status", "verified")
+    return "verified"
+
+def is_verified(user_id: int) -> bool:
+    """Devuelve True si el usuario está verificado."""
+    return get_user_status(user_id) == "verified"
 
 
 async def check_inactivity_job(context: ContextTypes.DEFAULT_TYPE):

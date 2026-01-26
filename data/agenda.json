@@ -427,5 +427,276 @@
       "creador_id": 7014104426.0,
       "activo": true
     }
+  ],
+  "2025-11-22": [
+    {
+      "hora": "19:00",
+      "titulo": "Tomar algo y cenar",
+      "asistentes": [
+        {
+          "id": 85597212,
+          "nombre": "CRISTINA",
+          "username": "CRISTINA"
+        },
+        {
+          "id": 85597212,
+          "nombre": "fran",
+          "username": "francd76"
+        },
+        {
+          "id": 6519041802,
+          "nombre": "Dmg",
+          "username": "Dmg029"
+        }
+      ],
+      "creador_id": 6718558694.0,
+      "activo": true
+    }
+  ],
+  "2025-11-30": [
+    {
+      "hora": "19:00",
+      "titulo": "Tomar algo y cenar en Noche y Día Portales y La Matea",
+      "asistentes": [],
+      "creador_id": 6718558694.0,
+      "activo": false
+    }
+  ],
+  "2025-11-29": [
+    {
+      "hora": "22:00",
+      "titulo": "Cena picoteo bar tirador callé somosierra",
+      "asistentes": [
+        {
+          "id": 1508931523,
+          "nombre": "Susa",
+          "username": "Coterpin"
+        },
+        {
+          "id": 1152746786,
+          "nombre": "Iñaki",
+          "username": "Innk99"
+        }
+      ],
+      "creador_id": 6718558694.0,
+      "activo": false
+    },
+    {
+      "hora": "20:00",
+      "titulo": "Ir a tomar algo cafe boutique",
+      "asistentes": [],
+      "creador_id": 6718558694.0,
+      "activo": true
+    }
+  ],
+  "2025-12-06": [
+    {
+      "hora": "20:00",
+      "titulo": "Ir a tomar algo cafe gran via 50",
+      "asistentes": [
+        {
+          "id": 1152746786,
+          "nombre": "Iñaki",
+          "username": "Innk99"
+        }
+      ],
+      "creador_id": 6718558694.0,
+      "activo": false
+    },
+    {
+      "hora": "21:00",
+      "titulo": "ir a tomar algo cafe gran via 50",
+      "asistentes": [],
+      "creador_id": 6718558694.0,
+      "activo": false
+    },
+    {
+      "hora": "21:00",
+      "titulo": "Cena en Refugio y café Gran Vía (5 personas)",
+      "asistentes": [],
+      "creador_id": 6718558694.0,
+      "activo": false
+    },
+    {
+      "hora": "21:00",
+      "titulo": "Tomar algo en Café Gran Vía 50 y cena en Refugio. Quedan 5 sitios.",
+      "asistentes": [],
+      "creador_id": 6718558694.0,
+      "activo": false
+    },
+    {
+      "hora": "21:00",
+      "titulo": "Cena en Refugio (queda sitio para 3)",
+      "asistentes": [],
+      "creador_id": 6718558694.0,
+      "activo": false
+    }
+  ],
+  "2025-12-13": [
+    {
+      "hora": "22:00",
+      "titulo": "cena Navidad bar trompeta queda sitio para seis personas",
+      "asistentes": [
+        {
+          "id": 628297798,
+          "nombre": "dosqui",
+          "username": "dosqui"
+        }
+      ],
+      "creador_id": 6718558694.0,
+      "activo": false
+    },
+    {
+      "hora": "22:00",
+      "titulo": "Cena de Navidad bar Trompeta (quedan 5 plazas)",
+      "asistentes": [],
+      "creador_id": 6718558694.0,
+      "activo": false
+    },
+    {
+      "hora": "22:00",
+      "titulo": "Cena Navidad bar trompeta queda sitio para seis personas",
+      "asistentes": [],
+      "creador_id": 6718558694.0,
+      "activo": false
+    },
+    {
+      "hora": "22:00",
+      "titulo": "Cena de Navidad en el Bar Trompeta (5 plazas)",
+      "asistentes": [],
+      "creador_id": 6718558694.0,
+      "activo": false
+    },
+    {
+      "hora": "22:00",
+      "titulo": "Cena Navidad bar Trompeta (4 plazas)",
+      "asistentes": [],
+      "creador_id": 6718558694.0,
+      "activo": false
+    },
+    {
+      "hora": "22:00",
+      "titulo": "Cena Navidad bar trompeta queda sitio para tres personas",
+      "asistentes": [],
+      "creador_id": 6718558694.0,
+      "activo": false
+    },
+    {
+      "hora": "22:00",
+      "titulo": "Cena Navidad bar trompeta queda sitio para dos personas",
+      "asistentes": [],
+      "creador_id": 6718558694.0,
+      "activo": false
+    }
+  ],
+  "2025-12-20": [
+    {
+      "hora": "21:30",
+      "titulo": "Cenar en bar venue calle fundicion, quedan 5 sitios",
+      "asistentes": [],
+      "creador_id": 6718558694.0,
+      "activo": false
+    },
+    {
+      "hora": "21:30",
+      "titulo": "Cenar en el bar Venue calle Fundición (4 plazas)",
+      "asistentes": [],
+      "creador_id": 6718558694.0,
+      "activo": false
+    },
+    {
+      "hora": "21:30",
+      "titulo": "Cena en Bar Venue Calle Fundición",
+      "asistentes": [],
+      "creador_id": 6718558694.0,
+      "activo": false
+    },
+    {
+      "hora": "21:30",
+      "titulo": "Cenar en bar venue calle fundicion",
+      "asistentes": [],
+      "creador_id": 6718558694.0,
+      "activo": false
+    },
+    {
+      "hora": "21:30",
+      "titulo": "Cena en Bar Venue Calle Fundición",
+      "asistentes": [],
+      "creador_id": 6718558694.0,
+      "activo": false
+    }
+  ],
+  "2026-01-10": [
+    {
+      "hora": "20:00",
+      "titulo": "Pinchos por San Juan",
+      "asistentes": [],
+      "creador_id": 6718558694.0,
+      "activo": false
+    }
+  ],
+  "2026-01-18": [
+    {
+      "hora": "20:00",
+      "titulo": "Pinchos por San Juan",
+      "asistentes": [],
+      "creador_id": 6718558694.0,
+      "activo": false
+    }
+  ],
+  "2026-01-17": [
+    {
+      "hora": "20:00",
+      "titulo": "Pinchos por San Juan",
+      "asistentes": [],
+      "creador_id": 6718558694.0,
+      "activo": false
+    },
+    {
+      "hora": "20:00",
+      "titulo": "Pinchos por San Juan esquina Tivoli",
+      "asistentes": [],
+      "creador_id": 6718558694.0,
+      "activo": false
+    }
+  ],
+  "2026-01-24": [
+    {
+      "hora": "21:15",
+      "titulo": "Cenar Cafe Delicias Espolón",
+      "asistentes": [],
+      "creador_id": 6718558694.0,
+      "activo": false
+    },
+    {
+      "hora": "20:30",
+      "titulo": "Pinchos por la Laurel",
+      "asistentes": [],
+      "creador_id": 6718558694.0,
+      "activo": false
+    },
+    {
+      "hora": "21:15",
+      "titulo": "Cena en Café Delicias Espolón",
+      "asistentes": [],
+      "creador_id": 6718558694.0,
+      "activo": false
+    }
+  ],
+  "2026-01-31": [
+    {
+      "hora": "20:30",
+      "titulo": "Pinchos por la Laurel",
+      "asistentes": [],
+      "creador_id": 6718558694.0,
+      "activo": false
+    },
+    {
+      "hora": "20:30",
+      "titulo": "Pinchos por San Juan",
+      "asistentes": [],
+      "creador_id": 6718558694.0,
+      "activo": true
+    }
   ]
 }

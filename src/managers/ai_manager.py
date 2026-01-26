@@ -140,3 +140,34 @@ async def generate_text(prompt: str) -> str:
         print(f"🚨 Error al generar texto simple: {e}")
         traceback.print_exc()
         return "¡Ay va! No he podido generar el texto. Algo ha fallado."
+
+async def evaluate_presentation(text: str) -> bool:
+    """
+    Evalúa si un texto es una presentación personal coherente.
+    Devuelve True si lo es, False si no.
+    """
+    if not settings.GEMINI_API_KEY:
+        print("⚠️ Gemini API Key no configurada, saltando evaluación de presentación.")
+        return False # Fallback seguro
+
+    try:
+        # Usamos un chat separado para esto para no contaminar el contexto principal
+        # o usamos generate_content directamente.
+        
+        prompt = (
+            f"Analiza el siguiente texto y determina si es una presentación personal coherente de un nuevo usuario en un grupo de chat. "
+            f"El usuario debería decir quién es, saludar, o dar algún detalle sobre sí mismo. "
+            f"Texto: '{text}'\n"
+            f"Responde ÚNICAMENTE con la palabra 'SÍ' si es una presentación válida, o 'NO' si no lo es (por ejemplo si es spam, un insulto suelto, o texto sin sentido)."
+        )
+
+        response = await model.generate_content_async(prompt)
+        
+        result = response.text.strip().upper()
+        print(f"🧐 Evaluación de presentación: '{text}' -> {result}")
+        
+        return "SÍ" in result or "SI" in result
+        
+    except Exception as e:
+        print(f"🚨 Error al evaluar presentación: {e}")
+        return False
