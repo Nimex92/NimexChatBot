@@ -13,8 +13,8 @@ from telegram.ext import (
 
 # Importamos desde nuestra nueva estructura en 'src'
 from src.config import settings
-from src.managers import agenda_manager, user_manager, debate_manager
-from src.handlers import general_handlers, agenda_handlers, group_handlers, debate_handlers, level_handlers
+from src.managers import agenda_manager, user_manager, debate_manager, word_game_manager
+from src.handlers import general_handlers, agenda_handlers, group_handlers, debate_handlers, level_handlers, word_game_handlers
 
 async def track_activity_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """
@@ -56,6 +56,7 @@ async def main() -> None:
     agenda_manager.cargar_agenda()
     user_manager.load_users()
     debate_manager.load_debate_data()
+    word_game_manager.load_word_game_data()
 
     app = ApplicationBuilder().token(settings.TELEGRAM_TOKEN).build()
 
@@ -84,13 +85,16 @@ async def main() -> None:
     # 0. Verificación de nuevos usuarios (Alta prioridad)
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND & filters.ChatType.GROUPS, general_handlers.check_presentation), group=0)
 
-    # 1. Menciones al bot
+    # 1. Juego de palabra (adivinanzas)
+    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND & filters.ChatType.GROUPS, word_game_handlers.handle_guess), group=1)
+
+    # 2. Menciones al bot
     app.add_handler(MessageHandler(filters.TEXT & filters.ChatType.GROUPS, general_handlers.handle_mention), group=1)
     
-    # 2. Tracking de actividad (XP) - Ahora incluye comandos (filters.TEXT)
+    # 3. Tracking de actividad (XP) - Ahora incluye comandos (filters.TEXT)
     app.add_handler(MessageHandler(filters.TEXT, track_activity_handler), group=2)
 
-    # 3. Otros manejadores de texto y bienvenida
+    # 4. Otros manejadores de texto y bienvenida
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, agenda_handlers.manejar_mensajes_de_texto), group=3)
     app.add_handler(MessageHandler(filters.StatusUpdate.NEW_CHAT_MEMBERS, general_handlers.saludar_nuevo_miembro), group=3)
 
@@ -106,6 +110,9 @@ async def main() -> None:
             
             # --- Programar Incitación al Debate (Loop aleatorio) ---
             debate_manager.schedule_next_incitement(app.job_queue)
+
+            # --- Programar Juego de la Palabra (Loop aleatorio) ---
+            word_game_manager.schedule_next_word_game(app.job_queue)
             
             # drop_pending_updates=True ignora mensajes acumulados mientras el bot estaba apagado
             await app.updater.start_polling(drop_pending_updates=True)

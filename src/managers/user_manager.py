@@ -42,6 +42,7 @@ def update_user_activity(user):
             "lives": 3,
             "level": 1,
             "xp": 0,
+            "points": 0,
             "last_xp_timestamp": 0,
             "status": "pending_presentation" # Por defecto, nuevos usuarios deben presentarse
         }
@@ -54,8 +55,22 @@ def update_user_activity(user):
         user_data["level"] = 1
         user_data["xp"] = 0
         user_data["last_xp_timestamp"] = 0
+    if "points" not in user_data:
+        user_data["points"] = 0
 
     save_users()
+
+def add_points(user_id: int, points: int) -> int:
+    """
+    Suma puntos a un usuario y devuelve el total.
+    """
+    user_id_str = str(user_id)
+    if user_id_str not in users_db:
+        return 0
+
+    users_db[user_id_str]["points"] = users_db[user_id_str].get("points", 0) + points
+    save_users()
+    return users_db[user_id_str]["points"]
 
 def grant_xp_on_message(user_id: int) -> dict | None:
     """
