@@ -91,6 +91,10 @@ def get_last_debate_message_id() -> int | None:
     """Obtiene el ID del último mensaje de debate anclado."""
     return debate_data.get("last_message_id")
 
+def set_last_debate_message_id(message_id: int | None):
+    """Alias para set_last_debate_info usado en tests y coherencia."""
+    set_last_debate_info(message_id)
+
 def set_last_debate_info(message_id: int | None, topic: str | None = None):
     """Guarda el ID del mensaje, la fecha actual y el tema."""
     global debate_data

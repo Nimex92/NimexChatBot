@@ -698,5 +698,15 @@
       "creador_id": 6718558694.0,
       "activo": true
     }
+  ],
+  "2026-02-14": [
+    {
+      "id": "c574c083-a6b0-44dc-8604-07b3936f49fe",
+      "hora": "21:00",
+      "titulo": "Cenar en Las Nubes",
+      "asistentes": [],
+      "creador_id": 7014104426.0,
+      "activo": true
+    }
   ]
 }

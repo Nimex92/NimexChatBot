@@ -35,9 +35,13 @@ def update_user_activity(user):
     now_iso = datetime.now().isoformat()
 
     if user_id not in users_db:
+        # Intentamos obtener el nombre de varias formas para evitar errores
+        first_name = getattr(user, 'first_name', None) or getattr(user, 'nombre', None) or "Majo/a"
+        username = getattr(user, 'username', None) or "sin_username"
+        
         users_db[user_id] = {
-            "first_name": user.first_name,
-            "username": user.username,
+            "first_name": first_name,
+            "username": username,
             "join_date": now_iso,
             "lives": 3,
             "level": 1,

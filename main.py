@@ -85,18 +85,18 @@ async def main() -> None:
     # 0. Verificación de nuevos usuarios (Alta prioridad)
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND & filters.ChatType.GROUPS, general_handlers.check_presentation), group=0)
 
-    # 1. Juego de palabra (adivinanzas)
-    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND & filters.ChatType.GROUPS, word_game_handlers.handle_guess), group=1)
-
-    # 2. Menciones al bot
+    # 1. Menciones al bot
     app.add_handler(MessageHandler(filters.TEXT & filters.ChatType.GROUPS, general_handlers.handle_mention), group=1)
+
+    # 2. Juego de palabra (adivinanzas)
+    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND & filters.ChatType.GROUPS, word_game_handlers.handle_guess), group=2)
     
     # 3. Tracking de actividad (XP) - Ahora incluye comandos (filters.TEXT)
-    app.add_handler(MessageHandler(filters.TEXT, track_activity_handler), group=2)
+    app.add_handler(MessageHandler(filters.TEXT, track_activity_handler), group=3)
 
     # 4. Otros manejadores de texto y bienvenida
-    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, agenda_handlers.manejar_mensajes_de_texto), group=3)
-    app.add_handler(MessageHandler(filters.StatusUpdate.NEW_CHAT_MEMBERS, general_handlers.saludar_nuevo_miembro), group=3)
+    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, agenda_handlers.manejar_mensajes_de_texto), group=4)
+    app.add_handler(MessageHandler(filters.StatusUpdate.NEW_CHAT_MEMBERS, general_handlers.saludar_nuevo_miembro), group=4)
 
     print("🤖 Bot modular arrancado. Escuchando menciones y con tareas de debate programadas.")
     
