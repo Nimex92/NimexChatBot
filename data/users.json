@@ -4,11 +4,12 @@
     "username": "nimexdev",
     "join_date": "2025-09-18T21:34:36.754039",
     "lives": 3,
-    "last_seen": "2026-01-26T22:17:23.901345",
-    "level": 1,
-    "xp": 160,
-    "last_xp_timestamp": 1769462243.9032404,
-    "status": "verified"
+    "last_seen": "2026-02-07T11:49:07.320479",
+    "level": 2,
+    "xp": 460,
+    "last_xp_timestamp": 1770464947.323313,
+    "status": "verified",
+    "points": 0
   },
   "1363267787": {
     "first_name": "MAR",
@@ -54,8 +55,8 @@
     "first_name": "L.o",
     "username": "Marimorena2",
     "join_date": "2025-09-19T08:05:38.138434",
-    "lives": 1,
-    "last_seen": "2025-12-29T04:00:00.006738",
+    "lives": 0,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "7872996799": {
@@ -71,8 +72,12 @@
     "username": null,
     "join_date": "2025-09-19T10:08:47.816057",
     "lives": 2,
-    "last_seen": "2026-01-26T17:13:28.949442",
-    "status": "verified"
+    "last_seen": "2026-02-07T10:57:19.622734",
+    "status": "verified",
+    "level": 1,
+    "xp": 180,
+    "last_xp_timestamp": 1770461839.6262474,
+    "points": 0
   },
   "5248098342": {
     "first_name": "El Ángel",
@@ -87,8 +92,12 @@
     "username": "dequeneme",
     "join_date": "2025-09-19T17:21:09.173250",
     "lives": 0,
-    "last_seen": "2026-01-17T04:00:00.010088",
-    "status": "verified"
+    "last_seen": "2026-02-07T10:23:48.135340",
+    "status": "verified",
+    "level": 1,
+    "xp": 20,
+    "last_xp_timestamp": 1770459828.1385021,
+    "points": 0
   },
   "143845465": {
     "first_name": ".",
@@ -110,8 +119,8 @@
     "first_name": "Juan Marcos",
     "username": "jmarcos00",
     "join_date": "2025-09-20T07:52:13.396983",
-    "lives": 1,
-    "last_seen": "2025-12-31T13:08:09.210892",
+    "lives": 0,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "1360602883": {
@@ -750,8 +759,8 @@
     "first_name": "Trollkemada",
     "username": null,
     "join_date": "2025-09-22T07:07:22.121885",
-    "lives": 2,
-    "last_seen": "2026-01-04T01:17:33.731741",
+    "lives": 1,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "1518414207": {
@@ -918,8 +927,8 @@
     "first_name": "Susa",
     "username": "Coterpin",
     "join_date": "2025-09-23T07:52:43.727975",
-    "lives": 1,
-    "last_seen": "2025-12-29T04:00:00.006738",
+    "lives": 0,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "5691989732": {
@@ -1110,8 +1119,8 @@
     "first_name": "😃",
     "username": null,
     "join_date": "2025-09-26T10:08:59.730679",
-    "lives": 1,
-    "last_seen": "2026-01-06T04:00:00.003567",
+    "lives": 0,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "1472027041": {
@@ -1134,8 +1143,8 @@
     "first_name": "Miguel",
     "username": "Miguangl",
     "join_date": "2025-09-26T19:02:36.156363",
-    "lives": 2,
-    "last_seen": "2026-01-06T12:44:39.750911",
+    "lives": 1,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "8326539421": {
@@ -1206,8 +1215,8 @@
     "first_name": "Raqyel",
     "username": null,
     "join_date": "2025-09-27T17:55:23.122001",
-    "lives": 1,
-    "last_seen": "2026-01-02T22:05:51.171921",
+    "lives": 0,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "443558618": {
@@ -1262,8 +1271,8 @@
     "first_name": "Alexey",
     "username": null,
     "join_date": "2025-09-28T15:00:29.424837",
-    "lives": 2,
-    "last_seen": "2026-01-04T13:30:10.588430",
+    "lives": 1,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "6248709155": {
@@ -1353,8 +1362,8 @@
     "first_name": "Bmw320..",
     "username": "Qnkiur",
     "join_date": "2025-09-30T19:41:14.735759",
-    "lives": 1,
-    "last_seen": "2026-01-06T23:43:36.015799",
+    "lives": 0,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "5413527407": {
@@ -1379,14 +1388,6 @@
     "join_date": "2025-10-01T20:31:27.232191",
     "lives": 0,
     "last_seen": "2026-01-17T04:00:00.010088",
-    "status": "verified"
-  },
-  "6788626219": {
-    "first_name": "Joseba",
-    "username": "Joseba37",
-    "join_date": "2025-10-01T23:44:24.294063",
-    "lives": 0,
-    "last_seen": "2026-01-25T18:59:07.071862",
     "status": "verified"
   },
   "6289157930": {
@@ -1481,16 +1482,16 @@
     "first_name": "🤑🤭",
     "username": null,
     "join_date": "2025-11-18T00:41:57.203982",
-    "lives": 2,
-    "last_seen": "2025-12-29T09:55:56.249379",
+    "lives": 1,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "6599146543": {
     "first_name": "Eduardo",
     "username": null,
     "join_date": "2025-11-18T14:41:08.718882",
-    "lives": 2,
-    "last_seen": "2026-01-01T07:25:07.502747",
+    "lives": 1,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "7032033638": {
@@ -1545,8 +1546,8 @@
     "first_name": "....",
     "username": "aeiou12345690",
     "join_date": "2025-11-20T22:17:41.429905",
-    "lives": 2,
-    "last_seen": "2026-01-07T04:00:00.007439",
+    "lives": 1,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "6428065802": {
@@ -1561,8 +1562,8 @@
     "first_name": "Jorge",
     "username": null,
     "join_date": "2025-11-21T05:19:07.099437",
-    "lives": 2,
-    "last_seen": "2025-12-30T04:00:00.003455",
+    "lives": 1,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "85597212": {
@@ -1625,8 +1626,8 @@
     "first_name": ".",
     "username": null,
     "join_date": "2025-11-23T13:07:37.005019",
-    "lives": 3,
-    "last_seen": "2025-12-28T03:20:55.767846",
+    "lives": 2,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "8085476667": {
@@ -1641,16 +1642,16 @@
     "first_name": "Paula",
     "username": null,
     "join_date": "2025-11-24T15:05:43.284824",
-    "lives": 2,
-    "last_seen": "2025-12-29T08:08:57.746645",
+    "lives": 1,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "5788104568": {
     "first_name": "Jon",
     "username": "j_o_n_1979",
     "join_date": "2025-11-24T16:15:33.164844",
-    "lives": 2,
-    "last_seen": "2026-01-07T04:00:00.007439",
+    "lives": 1,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "8456761195": {
@@ -1673,8 +1674,8 @@
     "first_name": "Ana",
     "username": null,
     "join_date": "2025-11-25T16:23:07.853400",
-    "lives": 2,
-    "last_seen": "2025-12-27T04:00:00.008268",
+    "lives": 1,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "5140040270": {
@@ -1697,24 +1698,24 @@
     "first_name": "Rachid",
     "username": null,
     "join_date": "2025-11-26T18:32:06.278306",
-    "lives": 2,
-    "last_seen": "2025-12-27T04:00:00.008268",
+    "lives": 1,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "6415258974": {
     "first_name": "Rau",
     "username": null,
     "join_date": "2025-11-27T03:27:46.512791",
-    "lives": 2,
-    "last_seen": "2025-12-27T04:00:00.008268",
+    "lives": 1,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "8568282833": {
     "first_name": "Jusncx",
     "username": null,
     "join_date": "2025-11-27T04:48:15.809433",
-    "lives": 2,
-    "last_seen": "2025-12-28T04:00:00.005199",
+    "lives": 1,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "1152746786": {
@@ -1729,24 +1730,24 @@
     "first_name": "Ruben",
     "username": null,
     "join_date": "2025-11-27T17:36:30.426655",
-    "lives": 2,
-    "last_seen": "2025-12-28T04:00:00.005199",
+    "lives": 1,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "5339608711": {
     "first_name": "Rafa",
     "username": "Rafabroly",
     "join_date": "2025-11-28T01:05:47.751778",
-    "lives": 2,
-    "last_seen": "2025-12-28T04:00:00.005199",
+    "lives": 1,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "5525492708": {
     "first_name": "Bit",
     "username": "Xabibita",
     "join_date": "2025-11-28T01:06:20.424807",
-    "lives": 2,
-    "last_seen": "2025-12-28T04:00:00.005199",
+    "lives": 1,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "2074065475": {
@@ -1761,8 +1762,8 @@
     "first_name": "J",
     "username": "j2jj2jjj2",
     "join_date": "2025-11-28T06:51:13.792581",
-    "lives": 2,
-    "last_seen": "2025-12-30T04:00:00.003455",
+    "lives": 1,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "7623548668": {
@@ -1777,40 +1778,40 @@
     "first_name": "Melanis",
     "username": null,
     "join_date": "2025-11-29T20:49:19.302805",
-    "lives": 2,
-    "last_seen": "2025-12-30T04:00:00.003455",
+    "lives": 1,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "8272841215": {
     "first_name": "Iosu",
     "username": null,
     "join_date": "2025-11-30T06:09:20.760651",
-    "lives": 2,
-    "last_seen": "2025-12-31T04:00:00.012564",
+    "lives": 1,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "1074233424": {
     "first_name": "Adrian",
     "username": "Adrii125",
     "join_date": "2025-11-30T16:51:59.435137",
-    "lives": 2,
-    "last_seen": "2025-12-31T04:00:00.012564",
+    "lives": 1,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "8070103772": {
     "first_name": "Vasiliy P",
     "username": null,
     "join_date": "2025-11-30T17:05:08.354539",
-    "lives": 2,
-    "last_seen": "2025-12-31T04:00:00.012564",
+    "lives": 1,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "6722304842": {
     "first_name": "Corey",
     "username": "HackerGlen1",
     "join_date": "2025-11-30T20:52:14.274552",
-    "lives": 2,
-    "last_seen": "2025-12-31T04:00:00.012564",
+    "lives": 1,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "5520234954": {
@@ -1825,8 +1826,8 @@
     "first_name": "Ibi",
     "username": "Ibitheman",
     "join_date": "2025-12-02T06:34:12.496048",
-    "lives": 2,
-    "last_seen": "2026-01-02T04:00:00.011963",
+    "lives": 1,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "6903151781": {
@@ -1841,48 +1842,48 @@
     "first_name": "Alastor",
     "username": null,
     "join_date": "2025-12-02T14:38:24.013798",
-    "lives": 2,
-    "last_seen": "2026-01-02T04:00:00.011963",
+    "lives": 1,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "701644349": {
     "first_name": "Oirad",
     "username": "oiradn",
     "join_date": "2025-12-03T13:23:28.924991",
-    "lives": 2,
-    "last_seen": "2026-01-03T04:00:00.060433",
+    "lives": 1,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "5462463664": {
     "first_name": "ViCSs",
     "username": "VictSsSs",
     "join_date": "2025-12-03T13:56:43.707147",
-    "lives": 2,
-    "last_seen": "2026-01-03T04:00:00.060433",
+    "lives": 1,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "8555696846": {
     "first_name": "ANITA",
     "username": null,
     "join_date": "2025-12-03T14:04:42.508914",
-    "lives": 2,
-    "last_seen": "2026-01-03T04:00:00.060433",
+    "lives": 1,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "5591329239": {
     "first_name": "Alvaro",
     "username": "saenz_cueto",
     "join_date": "2025-12-03T15:19:12.642269",
-    "lives": 2,
-    "last_seen": "2026-01-07T04:00:00.007439",
+    "lives": 1,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "1346436101": {
     "first_name": "Lucs",
     "username": null,
     "join_date": "2025-12-03T16:02:00.842092",
-    "lives": 2,
-    "last_seen": "2026-01-03T04:00:00.060433",
+    "lives": 1,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "5416698515": {
@@ -1897,48 +1898,48 @@
     "first_name": "P",
     "username": "Luger1940",
     "join_date": "2025-12-04T05:34:46.135872",
-    "lives": 2,
-    "last_seen": "2026-01-04T04:00:00.004174",
+    "lives": 1,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "6508838568": {
     "first_name": "Aitana",
     "username": null,
     "join_date": "2025-12-04T07:23:47.369646",
-    "lives": 2,
-    "last_seen": "2026-01-04T04:00:00.004174",
+    "lives": 1,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "8122889792": {
     "first_name": "luarn",
     "username": "azulez2027",
     "join_date": "2025-12-05T13:24:16.051681",
-    "lives": 2,
-    "last_seen": "2026-01-05T04:00:00.006374",
+    "lives": 1,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "2019539536": {
     "first_name": "@¥•×××====>---#95",
     "username": null,
     "join_date": "2025-12-06T07:40:33.131060",
-    "lives": 2,
-    "last_seen": "2026-01-06T04:00:00.003567",
+    "lives": 1,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "862529556": {
     "first_name": "LuZ ya",
     "username": null,
     "join_date": "2025-12-06T09:31:15.542984",
-    "lives": 2,
-    "last_seen": "2026-01-06T04:00:00.003567",
+    "lives": 1,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "5140521258": {
     "first_name": "Lop rod",
     "username": null,
     "join_date": "2025-12-06T10:41:35.359709",
-    "lives": 2,
-    "last_seen": "2026-01-06T04:00:00.003567",
+    "lives": 1,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "6844472284": {
@@ -1953,72 +1954,72 @@
     "first_name": "Gorka",
     "username": "aCer1993",
     "join_date": "2025-12-06T12:54:42.067874",
-    "lives": 2,
-    "last_seen": "2026-01-06T04:00:00.003567",
+    "lives": 1,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "746151809": {
     "first_name": "Carlos",
     "username": "DonExcel91",
     "join_date": "2025-12-06T18:49:56.322551",
-    "lives": 2,
-    "last_seen": "2026-01-06T04:00:00.003567",
+    "lives": 1,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "8338055393": {
     "first_name": "Paula 💖",
     "username": null,
     "join_date": "2025-12-06T21:44:17.464992",
-    "lives": 2,
-    "last_seen": "2026-01-06T04:00:00.003567",
+    "lives": 1,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "5626738427": {
     "first_name": ".",
     "username": null,
     "join_date": "2025-12-06T23:56:41.907657",
-    "lives": 2,
-    "last_seen": "2026-01-06T04:00:00.003567",
+    "lives": 1,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "7980839546": {
     "first_name": ".",
     "username": null,
     "join_date": "2025-12-07T09:26:16.024883",
-    "lives": 2,
-    "last_seen": "2026-01-07T04:00:00.007439",
+    "lives": 1,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "8019544279": {
     "first_name": "Josi",
     "username": null,
     "join_date": "2025-12-07T16:52:21.849320",
-    "lives": 2,
-    "last_seen": "2026-01-07T04:00:00.007439",
+    "lives": 1,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "6934938549": {
     "first_name": "Aritz",
     "username": null,
     "join_date": "2025-12-07T19:47:19.629363",
-    "lives": 2,
-    "last_seen": "2026-01-07T04:00:00.007439",
+    "lives": 1,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "8187962116": {
     "first_name": "SMM93",
     "username": null,
     "join_date": "2025-12-07T20:09:55.841973",
-    "lives": 2,
-    "last_seen": "2026-01-07T04:00:00.007439",
+    "lives": 1,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "8048815278": {
     "first_name": "Juantxo",
     "username": null,
     "join_date": "2025-12-07T22:08:01.666527",
-    "lives": 2,
-    "last_seen": "2026-01-07T04:00:00.007439",
+    "lives": 1,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "7757653981": {
@@ -2249,16 +2250,16 @@
     "first_name": "Hola",
     "username": "Gulilos",
     "join_date": "2025-12-22T13:34:13.010201",
-    "lives": 3,
-    "last_seen": "2025-12-28T17:17:29.008404",
+    "lives": 2,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "8441751614": {
     "first_name": "Dolkerio22",
     "username": "Dolkerio2",
     "join_date": "2025-12-22T16:09:15.274893",
-    "lives": 3,
-    "last_seen": "2026-01-06T14:46:09.586941",
+    "lives": 2,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "1140290397": {
@@ -2329,8 +2330,8 @@
     "first_name": "Josu",
     "username": "Josu111",
     "join_date": "2025-12-26T02:47:13.615455",
-    "lives": 3,
-    "last_seen": "2026-01-07T15:25:36.580956",
+    "lives": 2,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "907840513": {
@@ -2369,32 +2370,32 @@
     "first_name": "Juan",
     "username": null,
     "join_date": "2025-12-27T08:14:51.910384",
-    "lives": 3,
-    "last_seen": "2025-12-27T08:14:51.910384",
+    "lives": 2,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "8538499422": {
     "first_name": "Josi",
     "username": "josii69",
     "join_date": "2025-12-27T14:16:07.215450",
-    "lives": 3,
-    "last_seen": "2025-12-27T14:16:12.216136",
+    "lives": 2,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "1153515843": {
     "first_name": "Franco",
     "username": "Giah2",
     "join_date": "2025-12-27T15:05:38.510925",
-    "lives": 3,
-    "last_seen": "2025-12-27T15:05:38.510925",
+    "lives": 2,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "945752726": {
     "first_name": "Erik",
     "username": null,
     "join_date": "2025-12-27T18:03:10.920365",
-    "lives": 3,
-    "last_seen": "2025-12-27T18:03:27.658167",
+    "lives": 2,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "7292285687": {
@@ -2409,40 +2410,40 @@
     "first_name": "Don",
     "username": "dondanilor",
     "join_date": "2025-12-28T16:08:48.663146",
-    "lives": 3,
-    "last_seen": "2025-12-28T16:08:48.663146",
+    "lives": 2,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "1693748183": {
     "first_name": "Joxe",
     "username": null,
     "join_date": "2025-12-29T01:39:08.397969",
-    "lives": 3,
-    "last_seen": "2025-12-29T01:39:08.397969",
+    "lives": 2,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "8464259217": {
     "first_name": "Luka",
     "username": "lukaok192",
     "join_date": "2025-12-29T03:14:32.739903",
-    "lives": 3,
-    "last_seen": "2025-12-29T03:14:32.739903",
+    "lives": 2,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "1081953800": {
     "first_name": "Javier555",
     "username": "jaavier556",
     "join_date": "2025-12-29T05:11:49.522515",
-    "lives": 3,
-    "last_seen": "2025-12-29T05:11:49.522515",
+    "lives": 2,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "1374420950": {
     "first_name": "Pi",
     "username": "esasoyyo",
     "join_date": "2025-12-30T03:56:31.516694",
-    "lives": 3,
-    "last_seen": "2025-12-30T03:56:31.516694",
+    "lives": 2,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "8230906625": {
@@ -2457,32 +2458,32 @@
     "first_name": "J",
     "username": null,
     "join_date": "2025-12-31T02:28:14.855766",
-    "lives": 3,
-    "last_seen": "2025-12-31T02:28:14.855766",
+    "lives": 2,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "6875867919": {
     "first_name": "Jesus",
     "username": "JesGrimaldi",
     "join_date": "2026-01-01T02:04:21.666652",
-    "lives": 3,
-    "last_seen": "2026-01-01T02:04:21.666652",
+    "lives": 2,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "7332422060": {
     "first_name": "Johan",
     "username": "Johan_G22",
     "join_date": "2026-01-02T01:02:40.806592",
-    "lives": 3,
-    "last_seen": "2026-01-02T01:02:40.806592",
+    "lives": 2,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "995259145": {
     "first_name": "Isra",
     "username": "Israelav",
     "join_date": "2026-01-02T12:07:10.866578",
-    "lives": 3,
-    "last_seen": "2026-01-02T12:07:10.866578",
+    "lives": 2,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "7330403768": {
@@ -2497,8 +2498,8 @@
     "first_name": "José",
     "username": "SilvaMorais05",
     "join_date": "2026-01-05T16:44:47.233637",
-    "lives": 3,
-    "last_seen": "2026-01-05T16:44:47.233637",
+    "lives": 2,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "6942971295": {
@@ -2513,104 +2514,104 @@
     "first_name": ";",
     "username": "tarimga",
     "join_date": "2026-01-05T23:24:13.744757",
-    "lives": 3,
-    "last_seen": "2026-01-05T23:24:13.744757",
+    "lives": 2,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "8417519756": {
     "first_name": "A saco toda",
     "username": "Sergio43122",
     "join_date": "2026-01-05T23:29:53.914693",
-    "lives": 3,
-    "last_seen": "2026-01-05T23:29:53.914693",
+    "lives": 2,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "8262487088": {
     "first_name": "Lu",
     "username": null,
     "join_date": "2026-01-05T23:32:05.229328",
-    "lives": 3,
-    "last_seen": "2026-01-05T23:32:30.698671",
+    "lives": 2,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "1411427632": {
     "first_name": "xm",
     "username": "hidrocana",
     "join_date": "2026-01-06T00:07:24.409421",
-    "lives": 3,
-    "last_seen": "2026-01-06T00:07:24.409421",
+    "lives": 2,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "8442396750": {
     "first_name": "Andreahot",
     "username": "Beatrizhotsex",
     "join_date": "2026-01-06T00:10:36.998336",
-    "lives": 3,
-    "last_seen": "2026-01-06T00:15:12.024936",
+    "lives": 2,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "5895717273": {
     "first_name": "Hellboy",
     "username": null,
     "join_date": "2026-01-06T00:12:52.442833",
-    "lives": 3,
-    "last_seen": "2026-01-06T00:12:52.442833",
+    "lives": 2,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "8000269878": {
     "first_name": "Jona",
     "username": null,
     "join_date": "2026-01-06T00:27:45.485334",
-    "lives": 3,
-    "last_seen": "2026-01-06T00:27:45.485334",
+    "lives": 2,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "8525084071": {
     "first_name": "-",
     "username": "samonu00",
     "join_date": "2026-01-06T00:33:35.823369",
-    "lives": 3,
-    "last_seen": "2026-01-06T00:33:35.823369",
+    "lives": 2,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "5808377480": {
     "first_name": "Juan",
     "username": "juangonzpapa",
     "join_date": "2026-01-06T02:40:56.182410",
-    "lives": 3,
-    "last_seen": "2026-01-06T20:24:51.441269",
+    "lives": 2,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "7233158016": {
     "first_name": "N",
     "username": null,
     "join_date": "2026-01-06T05:10:52.273792",
-    "lives": 3,
-    "last_seen": "2026-01-06T05:10:52.273792",
+    "lives": 2,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "8288015264": {
     "first_name": "Nahuel",
     "username": null,
     "join_date": "2026-01-07T12:19:54.590582",
-    "lives": 3,
-    "last_seen": "2026-01-07T12:26:24.155600",
+    "lives": 2,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "6088351687": {
     "first_name": "С.",
     "username": null,
     "join_date": "2026-01-07T13:07:02.413798",
-    "lives": 3,
-    "last_seen": "2026-01-07T13:07:02.413798",
+    "lives": 2,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "1183189168": {
     "first_name": "..",
     "username": "peprpri",
     "join_date": "2026-01-07T18:01:31.937595",
-    "lives": 3,
-    "last_seen": "2026-01-07T18:01:31.937595",
+    "lives": 2,
+    "last_seen": "2026-02-07T04:00:00.003120",
     "status": "verified"
   },
   "1972876408": {
@@ -3052,5 +3053,29 @@
     "lives": 3,
     "last_seen": "2026-01-26T18:05:54.087232",
     "status": "verified"
+  },
+  "1535334109": {
+    "first_name": "Madeyone",
+    "username": "madeyone",
+    "join_date": "2026-02-07T05:36:52.123349",
+    "lives": 3,
+    "level": 1,
+    "xp": 40,
+    "points": 0,
+    "last_xp_timestamp": 1770445618.7199492,
+    "status": "pending_presentation",
+    "last_seen": "2026-02-07T06:27:17.730139"
+  },
+  "992760599": {
+    "first_name": "Antonio",
+    "username": "a_c_go",
+    "join_date": "2026-02-07T09:12:28.133027",
+    "lives": 3,
+    "level": 1,
+    "xp": 20,
+    "points": 0,
+    "last_xp_timestamp": 1770455548.13653,
+    "status": "pending_presentation",
+    "last_seen": "2026-02-07T09:12:28.133027"
   }
 }

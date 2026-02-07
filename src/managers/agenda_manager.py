@@ -5,6 +5,7 @@ from collections import defaultdict
 from datetime import datetime, timedelta
 from babel.dates import format_datetime
 import locale
+import uuid
 locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
 
 # Importamos la ruta del archivo desde nuestra configuración centralizada
@@ -41,6 +42,7 @@ def guardar_agenda():
 def crear_evento(fecha: str, hora: str, titulo: str, creador_id: int):
     """Añade un nuevo evento a la agenda y lo guarda."""
     evento = {
+        "id": str(uuid.uuid4()), # Generar un ID único para el evento
         "hora": hora,
         "titulo": titulo,
         "asistentes": [],
@@ -81,6 +83,19 @@ def desinscribir_usuario(fecha: str, idx: int, user_id: int):
         guardar_agenda()
         return True
     return False
+
+def apuntar_a_evento_por_id(evento_id: str, user_info: dict):
+    """
+    Permite a un usuario apuntarse a un evento usando su ID único.
+    """
+    for fecha_str, eventos_del_dia in agenda.items():
+        for idx, evento in enumerate(eventos_del_dia):
+            if evento.get("id") == evento_id:
+                if inscribir_usuario(fecha_str, idx, user_info):
+                    return f"¡{user_info['first_name']} apuntado/a al evento '{evento['titulo']}' del {fecha_str} a las {evento['hora']}\!"
+                else:
+                    return f"¡{user_info['first_name']} ya estaba apuntado/a al evento '{evento['titulo']}' del {fecha_str} a las {evento['hora']}\!"
+    return "¡Vaya! No he encontrado ningún evento con ese ID. ¿Estás seguro de que es el correcto?"
 
 # --- Funciones para obtener datos de la agenda ---
 

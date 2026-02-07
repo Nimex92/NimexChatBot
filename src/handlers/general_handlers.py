@@ -81,6 +81,7 @@ async def handle_mention(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """
     Se activa cuando alguien menciona al bot en un grupo.
     """
+    print("DEBUG: handle_mention function called.") # Temporary debug print
     # Nos aseguramos de que el mensaje no sea nulo
     if not update.message or not update.message.text:
         return

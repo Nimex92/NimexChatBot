@@ -91,6 +91,24 @@ ALL_TOOLS = [
         }
     },
     {
+        "name": "apuntarse_a_evento",
+        "description": "Permite a un usuario apuntarse a un evento existente en la agenda.",
+        "parameters": {
+            "type": "OBJECT",
+            "properties": {
+                "evento_id": {
+                    "type": "STRING",
+                    "description": "El ID único del evento al que el usuario quiere apuntarse."
+                },
+                "user_id": {
+                    "type": "INTEGER",
+                    "description": "El ID numérico del usuario que se está apuntando al evento."
+                }
+            },
+            "required": ["evento_id", "user_id"]
+        }
+    },
+    {
         "name": "obtener_eventos_activos",
         "description": "Consulta eventos en la agenda. Puede buscar en un rango de fechas específico o, si no se especifica, devuelve los eventos de las próximas 2 semanas.",
         "parameters": {
@@ -141,6 +159,7 @@ ALL_TOOLS = [
 
 AVAILABLE_TOOLS = {
     "crear_evento": agenda_manager.crear_evento,
+    "apuntarse_a_evento": agenda_manager.apuntar_a_evento_por_id,
     "obtener_eventos_activos": agenda_manager.obtener_eventos_activos,
     "get_weather": get_weather,
     "read_documentation_file": read_documentation_file,
