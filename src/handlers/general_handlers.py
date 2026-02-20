@@ -1,10 +1,13 @@
 # src/handlers/general_handlers.py
 from telegram import Update
 from telegram.ext import ContextTypes
+import re
 
 # Importamos los managers que vamos a usar en este archivo
 from src.managers import ai_manager, user_manager, verification_manager
 from src.config import settings
+
+RULES_ACCEPTANCE_PATTERN = re.compile(r"\bacept\w*\b.*\bnorm\w*\b|\bnorm\w*\b.*\bacept\w*\b", re.IGNORECASE)
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.effective_user
@@ -20,7 +23,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(saludo, parse_mode="MarkdownV2")
 
 async def saludar_nuevo_miembro(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    """Da la bienvenida a los nuevos miembros e inicia el proceso de verificación."""
+    """Da la bienvenida a los nuevos miembros e inicia la aceptación de normas."""
     for nuevo_miembro in update.message.new_chat_members:
         if nuevo_miembro.is_bot:
             continue
@@ -34,16 +37,15 @@ async def saludar_nuevo_miembro(update: Update, context: ContextTypes.DEFAULT_TY
         
         saludo = (
             f"¡Bienvenido al grupo, {nombre}! 👋\n\n"
-            f"⚠️ *IMPORTANTE*: Tienes *{settings.PRESENTATION_TIMEOUT_MINUTES} minutos* para presentarte brevemente al grupo.\n"
-            "Cuéntanos quién eres, qué te trae por aquí o saluda con gracia.\n"
-            "Si no lo haces, tendré que darte un toque... ¡y luego la patada! 👢\n\n"
-            "¡Dale, no seas tímido!"
+            "⚠️ *IMPORTANTE*: Para desbloquear las funciones del bot, acepta las normas del grupo.\n"
+            "Escribe un mensaje como: *acepto las normas*.\n\n"
+            f"Si pasan *{settings.PRESENTATION_TIMEOUT_MINUTES} minutos* sin hacerlo, te mandaré un recordatorio."
         )
         await update.message.reply_text(saludo, parse_mode="Markdown")
 
 async def check_presentation(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """
-    Analiza los mensajes de usuarios pendientes de verificación.
+    Analiza mensajes de usuarios pendientes para detectar aceptación de normas.
     """
     user = update.effective_user
     if not user or user.is_bot:
@@ -57,25 +59,21 @@ async def check_presentation(update: Update, context: ContextTypes.DEFAULT_TYPE)
     if not message_text:
         return
 
-    # Usamos la IA para evaluar si es una presentación válida
-    es_valido = await ai_manager.evaluate_presentation(message_text)
+    # Aceptación explícita de normas
+    es_valido = bool(RULES_ACCEPTANCE_PATTERN.search(message_text))
 
     if es_valido:
         # 1. Marcar como verificado
         user_manager.set_user_status(user.id, "verified")
         
-        # 2. Cancelar jobs de advertencia/baneo
+        # 2. Cancelar jobs de recordatorio
         verification_manager.cancel_verification_jobs(context, user.id)
         
         # 3. Felicitar
         await update.message.reply_text(
-            f"¡Genial, {user.first_name}! Presentación aceptada. ✅\n"
+            f"¡Genial, {user.first_name}! Normas aceptadas. ✅\n"
             "Ya eres uno de los nuestros. ¡Bienvenido oficialmente! 🎉"
         )
-    else:
-        # Si no es válido, no hacemos nada. Dejamos que el reloj siga corriendo.
-        # Opcionalmente, podríamos dar feedback, pero puede ser molesto si solo están charlando.
-        pass
 
 async def handle_mention(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """

@@ -48,7 +48,7 @@ def update_user_activity(user):
             "xp": 0,
             "points": 0,
             "last_xp_timestamp": 0,
-            "status": "pending_presentation" # Por defecto, nuevos usuarios deben presentarse
+            "status": "pending_rules" # Por defecto, nuevos usuarios deben aceptar normas
         }
     
     user_data = users_db[user_id]
@@ -165,7 +165,7 @@ def get_random_verified_users(count: int = 3) -> list[dict]:
 def set_user_status(user_id: int, status: str):
     """
     Establece el estado de verificación de un usuario.
-    Estados: 'verified', 'pending_presentation', 'warned'
+    Estados: 'verified', 'pending_rules'
     """
     user_id_str = str(user_id)
     if user_id_str in users_db:
@@ -179,7 +179,11 @@ def get_user_status(user_id: int) -> str:
     """
     user_id_str = str(user_id)
     if user_id_str in users_db:
-        return users_db[user_id_str].get("status", "verified")
+        status = users_db[user_id_str].get("status", "verified")
+        # Compatibilidad con estados antiguos
+        if status in {"pending_presentation", "warned"}:
+            return "pending_rules"
+        return status
     return "verified"
 
 def is_verified(user_id: int) -> bool:

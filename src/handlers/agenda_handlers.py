@@ -24,7 +24,7 @@ async def main_agenda_callback_handler(update: Update, context: ContextTypes.DEF
     
     # Verificación de usuario
     if not user_manager.is_verified(query.from_user.id):
-        await query.answer("⚠️ Debes presentarte al grupo antes de usar la agenda. ¡Di hola!", show_alert=True)
+        await query.answer("⚠️ Debes aceptar las normas antes de usar la agenda. Escribe: acepto las normas.", show_alert=True)
         return
 
     await query.answer()
@@ -65,7 +65,7 @@ async def agenda_menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Muestra el menú principal de la agenda."""
     # Verificación de usuario
     if not user_manager.is_verified(update.effective_user.id):
-        await update.message.reply_text("🔒 ¡Alto ahí! Antes de poder ver la agenda, tienes que presentarte al grupo. Cuéntanos algo breve sobre ti.")
+        await update.message.reply_text("🔒 ¡Alto ahí! Antes de poder ver la agenda, tienes que aceptar las normas. Escribe: acepto las normas.")
         return
 
     keyboard = [
